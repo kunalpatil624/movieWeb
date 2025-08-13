@@ -5,8 +5,10 @@ import MovieCards from './MovieCards'
 import { Link } from 'react-router-dom'
 import MovieCard from './MovieCard'
 import { movieData } from '../data/movieDataWithValidImages'
+import { useNavigate } from 'react-router-dom';
 
 const TrendingShow = () => {
+    const navigate = useNavigate();
   return (
     <div className='px-6 md:px-16 lg:px-24 xl:px-44 overflow-hidden'>
         <div className='pt-20 flex justify-between items-center'>
@@ -16,7 +18,7 @@ const TrendingShow = () => {
         <div id='movieDAta ' className='flex flex-wrap mt-10 gap-8 justify-center'>
             {
                 movieData.slice(0,6).map((movie) => (
-                    <div>
+                    <div onClick={()=>navigate(`movies/movie/${movie.id}`)}>
                         <MovieCard key={movie.id} movie={movie}/>
                     </div>
                 ))

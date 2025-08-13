@@ -8,6 +8,7 @@ import MovieDescription from "./components/pages/MovieDescription";
 import {Toaster} from 'react-hot-toast'
 import SeatLayout from "./components/pages/SeatLayout";
 import MyBooking from "./components/pages/MyBooking";
+import ScrollToTop from "./components/comonent/ScrollToTop";
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
     <>
     <Toaster/>
       <Navbar />
+        <ScrollToTop />
       <Routes>
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
