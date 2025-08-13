@@ -1,9 +1,10 @@
-import React from 'react'
-import { CgTrending, CgPlayButtonO  } from "react-icons/cg";
+import React from 'react';
+import { CgTrending, CgPlayButtonO } from "react-icons/cg";
 import { LuCircleDollarSign } from "react-icons/lu";
-import { FaUserGroup } from "react-icons/fa6";
-import {dummyDashboardData} from '../data/dummyDashboardData'
+import { FaUserGroup } from "react-icons/fa";
+import { dummyDashboardData } from '../data/dummyDashboardData';
 import DeshboardCards from '../DeshboardCards';
+
 const AdminDashboard = () => {
   return (
     <div>
