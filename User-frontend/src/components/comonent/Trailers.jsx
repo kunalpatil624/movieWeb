@@ -11,7 +11,7 @@ const Trailers = () => {
     <div className="px-6 md:px-16 lg:px-24 xl:px-44 overflow-hidden">
       <div>
         <p>Trailers</p>
-        <div className="relative m-6">
+        <div className="relative z-10">
           <div className="mx-auto max-w-full w-[960px] h-[540px]">
             <div className="w-[100%] h-[100%]">
               <iframe

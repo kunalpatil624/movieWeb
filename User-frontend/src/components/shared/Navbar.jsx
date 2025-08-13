@@ -20,7 +20,7 @@ const Navbar = () => {
         </div>
       </div>
 
-      <div className='fixed flex bottom-0 left-0 w-full h-15 justify-around py-2 md:hidden rounded-t-2xl shadow-lg mb-4'>
+      <div className='fixed flex z-50 bottom-0 left-0 w-full h-15 justify-around py-2 md:hidden rounded-t-2xl shadow-lg mb-4'>
         <div className='flex justify-between h-15 gap-8 backdrop-blur items-center bg-black/70 md:bg-white/10 py-3 px-8 rounded-3xl border border-gray-300/20'>
           <a className='text-white' href="/">Home</a>
           <a  href="/movies">Movie</a>

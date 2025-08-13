@@ -3,7 +3,7 @@ import { Button } from "@/components/ui/button"
 
 export default function HeroSection() {
   return (
-    <div className="w-full min-h-screen bg-[url('https://res.cloudinary.com/dtyuevzyx/image/upload/v1754551338/37946_s3tmtt.jpg')] bg-cover bg-center">
+    <div className="w-full min-h-screen bg-[url('https://res.cloudinary.com/dtyuevzyx/image/upload/v1755086758/black-panther-4k-movie-poster-vi_rm5lp0.jpg')] bg-cover bg-center">
       <div className="flex flex-col items-start justify-center gap-4 px-6 md:px-16 lg:px-36 min-h-screen text-white bg-black/60">
         <img
           src="https://res.cloudinary.com/dtyuevzyx/image/upload/v1754551933/deg04zd-91232057-059b-4a17-906b-126292445d7f_mfog0x.png"
