@@ -13,7 +13,7 @@ function App() {
     <>
     <Toaster/>
       <Routes>
-        <Route path="/admin" element={<AdminLayout />}>
+        <Route path="/" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />
           <Route path="dashboard" element={<AdminDashboard />} />
           <Route path="add-show" element={<AddShow />} />
