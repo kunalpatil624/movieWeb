@@ -13,7 +13,7 @@ const TrendingShow = () => {
             <p>Kow Showing</p>
             <Button className='hover:cursor-pointer group' variant="none">View All <FaArrowRight className='group-hover:translate-x-0.5 transition h-4.5 w-4.5'/></Button>
         </div>
-        <div id='movieDAta ' className='flex flex-wrap mt-10 gap-8'>
+        <div id='movieDAta ' className='flex flex-wrap mt-10 gap-8 justify-center'>
             {
                 movieData.slice(0,6).map((movie) => (
                     <div>

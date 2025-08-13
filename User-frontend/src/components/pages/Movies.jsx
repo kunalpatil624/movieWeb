@@ -32,7 +32,7 @@ const Movies = () => {
 
   return (
     <div className="px-6 md:px-16 lg:px-24 xl:px-44 overflow-hidden my-40">
-      <div className="flex flex-wrap mt-10 gap-8">
+      <div className="flex flex-wrap mt-10 gap-8 justify-center">
         {movies.map((movie) => (
           <div
             key={movie.id}
