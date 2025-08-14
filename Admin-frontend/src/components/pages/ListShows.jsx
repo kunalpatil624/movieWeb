@@ -8,6 +8,7 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
+import { dummyDashboardData } from '../data/dummyDashboardData'
 
 const ListShows = () => {
   return (
@@ -19,30 +20,36 @@ const ListShows = () => {
         <TableCaption>A list of your recent invoices.</TableCaption>
         <TableHeader className="sticky top-0 bg-white z-10 shadow">
           <TableRow>
-            <TableHead className="w-[100px]">Invoice</TableHead>
-            <TableHead>Status</TableHead>
-            <TableHead>Method</TableHead>
-            <TableHead className="text-right">Amount</TableHead>
+            <TableHead className="w-[100px]">Movie Name</TableHead>
+            <TableHead>Show Time</TableHead>
+            <TableHead>Total Booking</TableHead>
+            <TableHead className="text-right">Earnings</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
+          {
+            dummyDashboardData.activeShows.map((show, idx) => (
+              <TableRow key={idx}>
+                <TableCell>{show.movie.title}</TableCell>
+                <TableCell>{new Date(show.showDateTime).toLocaleString("en-IN", {
+                weekday: "long",
+                year: "numeric",
+                month: "long",
+                day: "numeric",
+                hour: "2-digit",
+                minute: "2-digit",
+                hour12: true
+              })}</TableCell>
+                <TableCell>{show.totalBookings}</TableCell>
+                <TableCell>{show.totalRevenue}</TableCell>
+              </TableRow>
+            ))
+          }
           <TableRow>
             <TableCell className="font-medium">INV001</TableCell>
             <TableCell>Paid</TableCell>
             <TableCell>Credit Card</TableCell>
             <TableCell className="text-right">$250.00</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">INV002</TableCell>
-            <TableCell>Pending</TableCell>
-            <TableCell>PayPal</TableCell>
-            <TableCell className="text-right">$150.00</TableCell>
-          </TableRow>
-          <TableRow>
-            <TableCell className="font-medium">INV003</TableCell>
-            <TableCell>Cancelled</TableCell>
-            <TableCell>UPI</TableCell>
-            <TableCell className="text-right">$99.00</TableCell>
           </TableRow>
         </TableBody>
       </Table>
