@@ -2,7 +2,12 @@ import React from 'react'
 import {FaHome, FaSearch } from "react-icons/fa";
 import { Button } from "@/components/ui/button"
 import { useNavigate } from 'react-router-dom';
+import { useClerk, UserButton, useUser } from '@clerk/clerk-react';
+import { LuTicketPlus } from "react-icons/lu";
 const Navbar = () => {
+  const {user} = useUser();
+  const {openSignIn} = useClerk();
+
   const navigate = useNavigate()
   return (
     <div>
@@ -16,7 +21,18 @@ const Navbar = () => {
         </div>
         <div className='flex items-center gap-8'>
           <FaSearch/>
-          <Button className='text-white hover:bg-[#f84566bf] bg-[#F84565] hover:cursor-pointer'>Login</Button>
+          {
+            !user ? (
+              <Button onClick={openSignIn} className='text-white hover:bg-[#f84566bf] bg-[#F84565] hover:cursor-pointer'>Login</Button>
+              
+            ) : (
+              <UserButton>
+                <UserButton.MenuItems>
+                  <UserButton.Action label='My Booking' labelIcon={<LuTicketPlus width={15} onClick={()=> navigate("/my-bookings")}/>}/>
+                </UserButton.MenuItems>
+              </UserButton>
+            )
+          }
         </div>
       </div>
 
