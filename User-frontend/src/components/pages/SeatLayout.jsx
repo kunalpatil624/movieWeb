@@ -125,7 +125,7 @@ const SeatLayout = () => {
           </div>
 
           </div>
-        <Button onClick={()=> navigate('/my-bookings')} className='hover:bg-[#f84566bf] bg-[#F84565] mt-10 rounded-full ' >Procced to checkout <GoArrowRight strokeWidth={3} className='w-4 h-4 '/></Button>
+        <Button className='hover:bg-[#f84566bf] bg-[#F84565] mt-10 rounded-full ' >Procced to checkout <GoArrowRight strokeWidth={3} className='w-4 h-4 '/></Button>
         </div>
       </div>
     </div>

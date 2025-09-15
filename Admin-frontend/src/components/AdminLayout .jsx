@@ -1,22 +1,48 @@
 import React from 'react'
-import { Outlet } from 'react-router-dom'
+import { Outlet, useNavigate } from 'react-router-dom'
 import { TfiLayoutGrid2, TfiLayoutListThumb } from "react-icons/tfi";
+import { BiSolidCameraMovie } from "react-icons/bi";
 import { CgAddR, CgIfDesign } from "react-icons/cg";
+import axios from "axios";
+import { SUPER_ADMIN_API_AND_POINT } from './utills/constand';
+import { useDispatch } from 'react-redux';
+import { logout } from './redux/authSlice';
+import {toast} from 'sonner'
+import { Button } from "@/components/ui/button"
+
 const AdminLayout  = () => {
+  const navigate = useNavigate()
+  const dispatch = useDispatch()
+  const handleLogout = async()=> {
+    try {
+      const res = await axios.get(`${SUPER_ADMIN_API_AND_POINT}/logout`, {
+        withCredentials:true
+      });
+      if(res.data.success){
+        dispatch(logout(null));
+        navigate('/login');
+        toast.success(res.data.message);
+      }
+    } catch (error) {
+      console.log(error);
+      toast.error(error?.responce?.data?.message);
+    }
+  }
   return (
     <div>
       <div>
         <div className="flex items-center justify-between px-6 md:px-10 h-16 border-b border-gray-300/30">
           <div
-            onClick={() => {
-              Navigate("/admin");
-            }}
+            onClick={()=> navigate("/admin")}
             className="w-35 cursor-pointer"
           >
             <img
               src="https://res.cloudinary.com/dtyuevzyx/image/upload/v1754556239/ChatGPT_Image_Aug_7_2025_02_09_46_PM_vzt1bq.png"
               alt=""
             />
+          </div>
+          <div>
+            <Button onClick={()=>handleLogout()} className='cursor-pointer'>Log-Out</Button>
           </div>
         </div>
         <div className="flex">
@@ -29,6 +55,12 @@ const AdminLayout  = () => {
               <div className="flex flex-col gap-4">
               <a href="/admin" className="hover:text-red-500 text-center sm:text-left">
                <TfiLayoutGrid2 className='inline mr-1'/> <span className='hidden sm:inline'>Dashboard</span>
+              </a>
+              <a href="/admin/add-movie" className="hover:text-red-500 text-center sm:text-left">
+                <BiSolidCameraMovie className='inline mr-1 '/> <span className='hidden sm:inline'>Add Movie</span>
+              </a>
+              <a href="/admin/admin-requests" className="hover:text-red-500 text-center sm:text-left">
+                <BiSolidCameraMovie className='inline mr-1 '/> <span className='hidden sm:inline'>Admin Requests</span>
               </a>
               <a href="/admin/add-show" className="hover:text-red-500 text-center sm:text-left">
                <CgAddR className='inline mr-1 w-4 h-4 '/> <span className='hidden sm:inline'>Add Show</span>

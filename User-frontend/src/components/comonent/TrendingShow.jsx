@@ -6,9 +6,14 @@ import { Link } from 'react-router-dom'
 import MovieCard from './MovieCard'
 import { movieData } from '../data/movieDataWithValidImages'
 import { useNavigate } from 'react-router-dom';
+import { useSelector } from 'react-redux'
+import useGetAllMovies from '../hooks/UseGetAllMovies'
 
 const TrendingShow = () => {
     const navigate = useNavigate();
+    const { loading } = useGetAllMovies();
+  const movies = useSelector((state) => state.movie.movies);
+  if (loading) return <p>Loading...</p>;
   return (
     <div className='px-6 md:px-16 lg:px-24 xl:px-44 overflow-hidden'>
         <div className='pt-20 flex justify-between items-center'>
@@ -17,8 +22,8 @@ const TrendingShow = () => {
         </div>
         <div id='movieDAta ' className='flex flex-wrap mt-10 gap-8 justify-center'>
             {
-                movieData.slice(0,6).map((movie) => (
-                    <div onClick={()=>navigate(`movies/movie/${movie.id}`)}>
+                movies.slice(0,6).map((movie) => (
+                    <div key={movie._id} onClick={()=>navigate(`movies/movie/${movie._id}`)}>
                         <MovieCard key={movie.id} movie={movie}/>
                     </div>
                 ))

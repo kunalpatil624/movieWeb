@@ -3,15 +3,15 @@ import { movieData } from '../data/movieDataWithValidImages';
 import MovieCard from '../comonent/MovieCard';
 import { useNavigate } from 'react-router-dom';
 import Loading from '../comonent/Loading';
+import { useSelector } from 'react-redux';
 
 const Movies = () => {
   const navigate = useNavigate();
+  const movies = useSelector((state)=>state.movie.movies);
   const [loading, setLoading] = useState(true);
-  const [movies, setMovies] = useState([]);
 
   useEffect(() => {
     setTimeout(() => {
-      setMovies(movieData);
       setLoading(false);
     }, 1000); 
   }, []);

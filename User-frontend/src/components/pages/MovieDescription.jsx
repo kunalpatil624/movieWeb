@@ -1,73 +1,61 @@
-import React, { useRef, useState, useEffect } from 'react';
-import { movieData } from '../data/movieDataWithValidImages';
-import { useNavigate, useParams } from 'react-router-dom';
-import { FaHeart, FaPlayCircle, FaStar } from 'react-icons/fa';
+import React, { useRef } from "react";
+import { useNavigate, useParams } from "react-router-dom";
+import { FaHeart, FaPlayCircle, FaStar } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
-import MovieCards from '../comonent/MovieCards';
-import DateSelect from '../comonent/DateSelect';
-import Loading from '../comonent/Loading'; // tumhara spinner import
+import MovieCards from "../comonent/MovieCards";
+import DateSelect from "../comonent/DateSelect";
+import Loading from "../comonent/Loading";
+import useGetSingleMovie from "../hooks/useGetSingleMovie";
+import { useSelector } from "react-redux";
 
 const MovieDescription = () => {
-  const dateSelectRef = useRef(null);
-  const navigate = useNavigate();
   const { id } = useParams();
+  const navigate = useNavigate();
+  const dateSelectRef = useRef(null);
 
-  const [loading, setLoading] = useState(true);
-  const [movie, setMovie] = useState(null);
+  // call API hook
+  const { loading } = useGetSingleMovie(id);
+  const movie = useSelector((state) => state.movie.singleMovie);
 
   function generateShowtimes(days) {
     const today = new Date();
     const times = ["10:00 AM", "2:00 PM", "6:00 PM", "9:00 PM"];
     const dateTime = {};
-
     for (let i = 0; i < days; i++) {
       const date = new Date(today);
       date.setDate(today.getDate() + i);
       const dateKey = date.toISOString().split("T")[0];
       dateTime[dateKey] = times;
     }
-
     return dateTime;
   }
-
   const dateTimeData = generateShowtimes(4);
 
   const scrollToDateSelect = () => {
-    dateSelectRef.current.scrollIntoView({ behavior: 'smooth' });
+    dateSelectRef.current.scrollIntoView({ behavior: "smooth" });
   };
 
-  useEffect(() => {
-    setTimeout(() => {
-      const foundMovie = movieData.find((m) => m.id === parseInt(id));
-      setMovie(foundMovie);
-      setLoading(false);
-    }, 1000); 
-  }, [id]);
-
-  if (loading) {
-    return <Loading />;
-  }
-
-  if (!movie) {
+  if (loading) return <Loading />;
+  if (!movie)
     return (
       <div className="flex justify-center items-center h-[80vh]">
-        <p className="text-gray-500 text-lg">Movies not found</p>
+        <p className="text-gray-500 text-lg">Movie not found</p>
       </div>
     );
-  }
 
   return (
     <div className="px-6 md:px-16 lg:px-24 xl:px-44 overflow-hidden my-40">
+      {/* Top Section */}
       <div className="flex flex-col md:flex-row gap-8 max-w-6xl mx-auto">
         <div>
           <img
             className="max-md:mx-auto rounded-xl h-104 max-w-70 object-cover"
-            src={movie.image}
+            src={movie.poster} // 🔹 API se aane wali image field use karo
             alt={movie.title}
           />
         </div>
         <div className="relative flex flex-col gap-3">
-          <p className="text-[#F84565]">{movie.language.toUpperCase()}</p>
+          <p className="text-[#F84565]">{movie.language?.toUpperCase()}</p>
           <h6 className="font-semibold text-4xl max-w-96 text-balance">
             {movie.title}
           </h6>
@@ -77,7 +65,8 @@ const MovieDescription = () => {
           </p>
           <p className="text-sm text-gray-400 max-w-xl">{movie.description}</p>
           <p>
-            {movie.duration} • {movie.genres.join(", ")} • {movie.year}
+            {movie.runtime} min • {movie.genres?.join(", ")} •{" "}
+            {new Date(movie.releaseDate).getFullYear()}
           </p>
           <div className="flex items-center gap-4 mt-4">
             <Button className="text-white hover:bg-[#1e2939dc] bg-[#1E2939]">
@@ -96,16 +85,17 @@ const MovieDescription = () => {
         </div>
       </div>
 
+      {/* Cast */}
       <div>
         <p className="mt-20 text-lg font-medium">Your Favorite Cast</p>
         <div className="overflow-x-auto no-scrollbar mt-8 pb-4">
-          <div className="flex items-center w-max px-4 gap-2 ">
-            {movie.characters.map((character, i) => (
+          <div className="flex items-center w-max px-4 gap-3 ">
+            {movie.casts?.map((character, i) => (
               <div key={i} className="flex flex-col items-center text-center">
                 <img
                   className="rounded-full h-20 md:h-20 aspect-square object-cover"
-                  src={character.image}
-                  alt=""
+                  src={character.imageUrl}
+                  alt={character.name}
                 />
                 <p className="font-medium text-xs mt-3">{character.name}</p>
               </div>
@@ -114,10 +104,12 @@ const MovieDescription = () => {
         </div>
       </div>
 
+      {/* Showtime */}
       <div ref={dateSelectRef}>
         <DateSelect dateTime={dateTimeData} id={id} />
       </div>
 
+      {/* Related Movies */}
       <div>
         <p className="text-lg font-medium mt-20 mb-20">You may also like</p>
         <MovieCards movie={movie} />
