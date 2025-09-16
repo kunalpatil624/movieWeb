@@ -2,16 +2,9 @@ import { User } from "../models/user.js";
 import jwt from 'jsonwebtoken'
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
+import { transporter } from "../config/nodemailer.js";
 
 const otpStore = {};
-const transporter = nodemailer.createTransport({
-  service: "gmail",
-  auth: {
-    user: process.env.EMAIL_USER, // Gmail
-    pass: process.env.EMAIL_PASS, // App password
-  },
-});
-
 
 export const sendSignupOTP = async (req, res) => {
   try {
