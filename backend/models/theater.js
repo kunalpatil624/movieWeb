@@ -2,6 +2,7 @@ import mongoose from "mongoose";
 
 const theaterSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  requestInfo: { type: mongoose.Schema.Types.ObjectId, ref: "AdminRequest", required: true },
   name: { type: String, required: true },
   theaterEmail: {type:String, required: true},
   theaterPhone: {type:String, required:true},
@@ -10,6 +11,7 @@ const theaterSchema = new mongoose.Schema({
   seats: { type: Number, required: true },
   facilities: [String],
   theaterImages: { type: [String], default: [] },
+  approved:{type:Boolean, default:false},
   priority: { type: String, enum: ["low", "medium", "high"], default: "medium" },
   shows: [{
     type:mongoose.Schema.ObjectId,

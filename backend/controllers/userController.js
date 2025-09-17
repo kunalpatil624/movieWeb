@@ -101,7 +101,7 @@ export const login = async (req, res)=> {
       });
     };
     
-    let user = await User.findOne({email});
+    let user = await User.findOne({email}).populate("theater").populate("theaterRequestDetails");
     if(!user){
       return res.status(400).json({
         message:"Incorrect email or password!",
@@ -138,7 +138,8 @@ export const login = async (req, res)=> {
       phoneNumber:user.phoneNumber,
       role:user.role,
       isTheaterRequestPending:user.isTheaterRequestPending,
-      theaterRequestDetails:user.theaterRequestDetails
+      theaterRequestDetails:user.theaterRequestDetails,
+      theater:user.theater
     };
   
     return res.status(200).cookie("token", token, {maxAge:1*24*60*60*1000, httpOnly:true, secure:true, sameSite:'none'}).json({

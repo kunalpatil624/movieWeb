@@ -108,20 +108,21 @@ export const sendRequest = async (req, res) => {
     await request.save();
 
     // ✅ Create Theater immediately
-    const theater = new Theater({
-      owner: userId,
-      name: theaterName,
-      theaterEmail,
-      theaterPhone,
-      theaterLogo: theaterLogoUrl,
-      location,
-      seats,
-      facilities: facilities ? JSON.parse(facilities) : [],
-      theaterImages: request.theaterImages,
-      priority: priority || "medium",
-    });
+    // const theater = new Theater({
+    //   owner: userId,
+    //   name: theaterName,
+    //   requestInfo:request._id,
+    //   theaterEmail,
+    //   theaterPhone,
+    //   theaterLogo: theaterLogoUrl,
+    //   location,
+    //   seats,
+    //   facilities: facilities ? JSON.parse(facilities) : [],
+    //   theaterImages: request.theaterImages,
+    //   priority: priority || "medium",
+    // });
 
-    await theater.save();
+    // await theater.save();
 
     // Link request to user
     await User.findByIdAndUpdate(userId, {
@@ -164,14 +165,6 @@ export const sendRequest = async (req, res) => {
     return res.status(200).json({
       message: "Request and Theater created successfully & emails sent!",
       request,
-      theater,
-      success: true,
-    });
-
-    return res.status(200).json({
-      message: "Request and Theater created successfully!",
-      request,
-      theater,
       success: true,
     });
 
@@ -271,21 +264,42 @@ export const updateRequest = async (req, res) => {
     await request.save();
 
     if (request.status === "approved") {
+      const existingTheater = await Theater.findOne({ requestInfo: request._id });
+
+  if (existingTheater) {
+    return res.status(400).json({
+      message: "This request is already approved & Theater already exists!",
+      success: false,
+      theater: existingTheater
+    });
+  }
       const theater = new Theater({
-        name: request.theaterName,
-        location: request.location,
-        seats: request.seats,
         owner: request.user,
-        facilities: request.facilities,
-        images: request.theaterImages
+    requestInfo: request._id,   // ✅ Link to AdminRequest
+    name: request.theaterName,
+    theaterEmail: request.theaterEmail,
+    theaterPhone: request.theaterPhone,
+    theaterLogo: request.theaterLogo,
+    location: request.location,
+    seats: request.seats,
+    facilities: request.facilities,
+    theaterImages: request.theaterImages,
+    priority: request.priority,
+    approved: true,  // ✅ Mark theater as approved
       });
       await theater.save();
-      await User.findByIdAndUpdate(request.user, { theater: theater._id });
+      const updatedUser = await User.findByIdAndUpdate(
+        request.user,
+        { theater: theater._id, role: "admin" },
+        { new: true }
+      ).populate("theater");
+
 
       return res.status(200).json({
         message: "Request approved & Theater created successfully!",
         success: true,
         request,
+        updatedUser,
         theater,
       });
     }

@@ -93,11 +93,11 @@ const Navbar = () => {
                 <DropdownMenuItem className="cursor-pointer">
                   Team
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">
+                <DropdownMenuItem className="cursor-pointer" >
                   Subscription
                 </DropdownMenuItem>
                 {
-                  user?.role === "admin" && <DropdownMenuItem>
+                  user?.role === "admin" && <DropdownMenuItem className="cursor-pointer" onClick={()=> navigate('/admin')}>
                     Deshboard
                   </DropdownMenuItem>
                 }

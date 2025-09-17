@@ -4,12 +4,12 @@ import Theater from '../models/theater.js';
 import { Show } from '../models/show.js';
 export const createShow = async(req, res) => {
     try {
-        const {movieId, theaterId, date, time, location,showPrice, totalSeates} = req.body;
-        if(!movieId || !theaterId || !date || !time || !location || !totalSeates  || !showPrice){
-            return res.status(400).json({
-                message:"All fields are required!",
-                success:false
-            });
+        const {movieId, theaterId, date, time,showPrice, totalSeates} = req.body;
+        if(!movieId || !theaterId || !date || !time || !totalSeates || !showPrice){ 
+            return res.status(400).json({ 
+                message:"All fields are required!", 
+                success:false 
+            }); 
         };
         const movie = await Movie.findById(movieId);
         const theater = await Theater.findById(theaterId);
@@ -30,12 +30,12 @@ export const createShow = async(req, res) => {
         success: false,
       });
     }
+   
         const show = new Show({
             movie:movieId,
             theater:theaterId,
             date:date,
             time:time,
-            location:location,
             showPrice:showPrice,
             totalSeates:totalSeates
         });

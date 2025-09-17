@@ -2,8 +2,10 @@ import React from "react";
 import { Outlet, Link } from "react-router-dom";
 import { TfiLayoutGrid2, TfiLayoutListThumb } from "react-icons/tfi";
 import { CgAddR, CgIfDesign } from "react-icons/cg";
+import { useSelector } from "react-redux";
 
 const AdminLayout = () => {
+  const user = useSelector((state)=>state.auth.user)
   return (
     <div>
       {/* Top Navbar */}
@@ -20,16 +22,16 @@ const AdminLayout = () => {
 
       <div className="flex">
         {/* Sidebar */}
-        <div className="h-[calc(100vh-64px)] md:flex flex-col items-center pt-8 max-w-13 md:max-w-60 w-full border-r border-gray-300/20 text-sm">
+        <div className="h-[calc(100vh-64px)] md:flex flex-col text-center items-center pt-8 max-w-13 md:max-w-60 w-full border-r border-gray-300/20 text-sm">
           <nav className="flex flex-col gap-4">
             <div>
               <img
                 className="h-9 md:h-14 w-9 md:w-14 rounded-full mx-auto"
-                src="https://res.cloudinary.com/dtyuevzyx/image/upload/v1740127576/samples/man-portrait.jpg"
+                src={user.imageUrl}
                 alt="admin"
               />
-              <p className="font-bold text-center hidden sm:inline ml-3">
-                Admin user
+              <p className="font-bold text-center hidden sm:inline">
+                {user.fullName}
               </p>
             </div>
 

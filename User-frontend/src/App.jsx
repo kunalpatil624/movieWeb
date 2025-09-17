@@ -19,6 +19,7 @@ import ViewProfile from "./components/pages/viewProfile.jsx";
 import AdminRequest from "./components/pages/AdminRequest.jsx";
 import TermsAndConditions from "./components/pages/TermsAndConditions.jsx";
 import Theaters from "./components/pages/Theaters.jsx";
+import TheaterDetail from "./components/pages/TheaterDetail.jsx";
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -42,6 +43,7 @@ function App() {
         <Route path="/theater-request" element={<AdminRequest />} />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/theaters" element={<Theaters />} />
+        <Route path="/theaters/theater/:id" element={<TheaterDetail />} />
 
         {/* Admin Routes (Nested) */}
         <Route path="/admin" element={<AdminLayout />}>

@@ -1,11 +1,12 @@
 import React from "react";
 import useGetAllTheaters from "../hooks/useGetAllTheaters";
 import { useSelector } from "react-redux";
+import { useNavigate } from "react-router-dom";
 
 const Theaters = () => {
   useGetAllTheaters();
   const theaters = useSelector((state) => state.theater.theaters);
-
+  const navigate = useNavigate();
   return (
     <div className="px-6 md:px-10 lg:px-14 xl:px-44 overflow-hidden my-40">
 
@@ -16,7 +17,6 @@ const Theaters = () => {
               key={idx}
               className=" shadow-lg rounded-2xl border border-red-800 p-4 hover:shadow-2xl transition-all"
             >
-              {/* Theater Logo + Name */}
               <div className="flex items-center space-x-4 mb-4">
                 <div className="h-16 w-16 rounded-full overflow-hidden border">
                   <img
@@ -53,7 +53,7 @@ const Theaters = () => {
 
               {/* Button */}
               <div className="mt-4 flex justify-end">
-                <button className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition">
+                <button className="px-4 py-2 bg-red-600 text-white rounded-lg hover:bg-red-700 transition" onClick={()=> navigate(`theater/${theater._id}`)}>
                   See More
                 </button>
               </div>
