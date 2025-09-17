@@ -3,14 +3,16 @@ import axios from 'axios';
 import { REQUEST_API_AND_POINT } from '../comonent/utills/constand';
 import { toast } from 'sonner';
 import { useNavigate } from 'react-router-dom';
-
+import { Button } from "@/components/ui/button"
 const AdminRequest = () => {
   const navigate = useNavigate();
-  
+  const [loading, setLoading] = useState(false);
   const [formData, setFormData] = useState({
     theaterName: '',
     location: '',
     seats: '',
+    phone:'',
+    email:'',
     facilities: [],
     priority: 'medium',
     agreeTerms: false,
@@ -61,13 +63,15 @@ const AdminRequest = () => {
     }
 
     try {
+      setLoading(true)
       const data = new FormData();
       data.append('theaterName', formData.theaterName);
       data.append('location', formData.location);
       data.append('seats', formData.seats);
+      data.append('theaterEmail', formData.email);
+      data.append('theaterPhone', formData.phone);
       data.append('priority', formData.priority);
       data.append('facilities', JSON.stringify(formData.facilities));
-
       documents.forEach((file) => data.append('documents', file));
       theaterImages.forEach((file) => data.append('theaterImages', file));
       if (theaterLogo) data.append('theaterLogo', theaterLogo);
@@ -78,6 +82,7 @@ const AdminRequest = () => {
       });
 
       if (res.data.success) {
+        setLoading(false);
         toast.success(res.data.message);
         navigate('/');
       }
@@ -85,6 +90,8 @@ const AdminRequest = () => {
       // Reset form
       setFormData({
         theaterName: '',
+        phone:'',
+        email:'',
         location: '',
         seats: '',
         facilities: [],
@@ -96,6 +103,7 @@ const AdminRequest = () => {
       setTheaterLogo(null);
 
     } catch (error) {
+      setLoading(false);
       console.error(error);
       toast.error(error?.response?.data?.message || "Something went wrong");
     }
@@ -115,7 +123,7 @@ const AdminRequest = () => {
       >
         {/* Theater Name */}
         <div>
-          <label className="block mb-2">Theater Name</label>
+          <label className="block mb-2">Theater Name <span className="text-red-500">*</span></label>
           <input
             type="text"
             name="theaterName"
@@ -128,7 +136,7 @@ const AdminRequest = () => {
 
         {/* Location */}
         <div>
-          <label className="block mb-2">Location</label>
+          <label className="block mb-2">Location <span className="text-red-500">*</span></label>
           <input
             type="text"
             name="location"
@@ -140,8 +148,9 @@ const AdminRequest = () => {
         </div>
 
         {/* Seats */}
+        <div className='flex md:flex-row flex-col gap-3'>
         <div>
-          <label className="block mb-2">Number of Seats</label>
+          <label className="block mb-2">Number of Seats <span className="text-red-500">*</span></label>
           <input
             type="number"
             name="seats"
@@ -151,6 +160,34 @@ const AdminRequest = () => {
             min={1}
             className="w-full p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
           />
+        </div>
+        <div className='flex gap-3 w-full flex flex-col md:flex-row'>
+          <div className='w-full'>
+            <label className="block mb-2">Theater phone No <span className="text-red-500">*</span></label>
+          <input
+            type="number"
+            name="phone"
+            value={formData.phone}
+            onChange={handleChange}
+            required
+            min={10}
+            className="w-full p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          </div>
+          <div className='w-full'>
+            <label className="block mb-2">Theater Email <span className="text-red-500">*</span></label>
+          <input
+            type="email"
+            name="email"
+            value={formData.email}
+            onChange={handleChange}
+            required
+            min={1}
+            max={12}
+            className="w-full p-3 rounded bg-gray-700 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          />
+          </div>
+        </div>
         </div>
 
         {/* Facilities */}
@@ -219,7 +256,7 @@ const AdminRequest = () => {
 
         {/* Theater Images */}
         <div>
-          <label className="block mb-2">Theater Images (Optional)</label>
+          <label className="block mb-2">Theater Images <span className="text-red-500">*</span></label>
           <input
             type="file"
             multiple
@@ -259,12 +296,15 @@ const AdminRequest = () => {
         </div>
 
         {/* Submit Button */}
-        <button
-          type="submit"
-          className="bg-blue-600 hover:bg-blue-700 transition px-6 py-3 rounded font-semibold"
-        >
-          Submit Request
-        </button>
+        <div className="text-center">
+        {
+            loading ? (
+              <Button className="w-[80%] my-4" ><Loader2 className=" mr-2 h-4 w-4 animate-spin"/> please wait</Button>
+            ) : (
+          <Button type="submit" onClick={()=> handleSubmit()} className=" my-4 bg-blue-700 w-[70%]">Submit</Button>
+            )
+          }
+      </div>
       </form>
     </div>
   );

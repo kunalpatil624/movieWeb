@@ -3,16 +3,23 @@ import AdminRequest from '../models/adminRequest.js';
 import { User } from '../models/user.js';
 import Theater from '../models/theater.js';
 import { uploadToCloudinary } from '../config/cloudinary.js';
+import { transporter } from '../config/nodemailer.js';
 
 
 export const sendRequest = async (req, res) => {
   try {
     const userId = req.id;
-    const { theaterName, location, seats, facilities, priority } = req.body;
+    const { theaterName,theaterEmail,theaterPhone, location, seats, facilities, priority } = req.body;
 
     if (!userId || !theaterName || !location) {
       return res.status(400).json({
         message: "user, theaterName, location are missing!",
+        success: false,
+      });
+    }
+    if (!theaterPhone || !theaterEmail) {
+      return res.status(400).json({
+        message: "Theater phone number, Email are missing!",
         success: false,
       });
     }
@@ -60,6 +67,8 @@ export const sendRequest = async (req, res) => {
     const request = new AdminRequest({
       user: userId,
       theaterName,
+      theaterEmail,
+      theaterPhone,
       location,
       seats,
       theaterLogo: theaterLogoUrl,
@@ -102,6 +111,8 @@ export const sendRequest = async (req, res) => {
     const theater = new Theater({
       owner: userId,
       name: theaterName,
+      theaterEmail,
+      theaterPhone,
       theaterLogo: theaterLogoUrl,
       location,
       seats,
@@ -115,6 +126,46 @@ export const sendRequest = async (req, res) => {
     // Link request to user
     await User.findByIdAndUpdate(userId, {
       $push: { theaterRequestDetails: request._id },
+    });
+
+    const user = await User.findById(userId);
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: user.email,
+      subject: "✅ Theater Request Submitted",
+      html: `
+        <h2>Hi ${user.fullName},</h2>
+        <p>Your theater request has been submitted successfully!</p>
+        <p><strong>Theater:</strong> ${theaterName}</p>
+        <p><strong>Location:</strong> ${location}</p>
+        <p><strong>Seats:</strong> ${seats}</p>
+        <p><strong>Priority:</strong> ${priority}</p>
+        <p>We will review your request shortly.</p>
+      `,
+    });
+
+    // ✅ 2. Send Detailed Email to SuperAdmin
+    await transporter.sendMail({
+      from: process.env.EMAIL_USER,
+      to: process.env.SUPERADMIN_EMAIL,
+      subject: "📝 New Theater Request Submitted",
+      html: `
+        <h2>New Theater Request</h2>
+        <p><strong>Name:</strong> ${theaterName}</p>
+        <p><strong>Location:</strong> ${location}</p>
+        <p><strong>Seats:</strong> ${seats}</p>
+        <p><strong>Priority:</strong> ${priority}</p>
+        <p><strong>Facilities:</strong> ${facilities}</p>
+        <p><strong>User:</strong> ${user.fullName} (${user.email})</p>
+        <p><strong>Logo:</strong> <img src="${theaterLogoUrl}" width="150"/></p>
+      `,
+    });
+
+    return res.status(200).json({
+      message: "Request and Theater created successfully & emails sent!",
+      request,
+      theater,
+      success: true,
     });
 
     return res.status(200).json({

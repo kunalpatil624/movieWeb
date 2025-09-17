@@ -54,7 +54,7 @@ const Navbar = () => {
           <p onClick={() => navigate("/movies")} className="cursor-pointer">
             Movie
           </p>
-          <p onClick={() => navigate("/")} className="cursor-pointer">
+          <p onClick={() => navigate("/theaters")} className="cursor-pointer">
             Theaters
           </p>
           <p onClick={() => navigate("/")} className="cursor-pointer">
@@ -125,7 +125,7 @@ const Navbar = () => {
           <p onClick={() => navigate("/movies")} className="cursor-pointer">
             Movie
           </p>
-          <p onClick={() => navigate("/")} className="cursor-pointer">
+          <p onClick={() => navigate("/theaters")} className="cursor-pointer">
             Theaters
           </p>
           <p onClick={() => navigate("/")} className="cursor-pointer">

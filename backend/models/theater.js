@@ -3,6 +3,8 @@ import mongoose from "mongoose";
 const theaterSchema = new mongoose.Schema({
   owner: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
   name: { type: String, required: true },
+  theaterEmail: {type:String, required: true},
+  theaterPhone: {type:String, required:true},
   theaterLogo: {type:String, required:true},
   location: { type: String, required: true },
   seats: { type: Number, required: true },

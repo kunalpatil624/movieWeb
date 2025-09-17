@@ -1,5 +1,6 @@
 import { configureStore, combineReducers } from "@reduxjs/toolkit";
 import authReducer from "./authSlice";
+import theaterReducer from "./theaterSlice"
 import {
   persistStore,
   persistReducer,
@@ -23,6 +24,7 @@ const persistConfig = {
 const rootReducer = combineReducers({
   auth: authReducer,
   movie:movieReducer,
+  theater:theaterReducer,
 });
 
 const persistedReducer = persistReducer(persistConfig, rootReducer);

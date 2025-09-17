@@ -18,6 +18,7 @@ import ListBookings from "./components/pages/ListBookings.jsx";
 import ViewProfile from "./components/pages/viewProfile.jsx";
 import AdminRequest from "./components/pages/AdminRequest.jsx";
 import TermsAndConditions from "./components/pages/TermsAndConditions.jsx";
+import Theaters from "./components/pages/Theaters.jsx";
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -40,6 +41,7 @@ function App() {
         <Route path="/my-bookings" element={<MyBooking />} />
         <Route path="/theater-request" element={<AdminRequest />} />
         <Route path="/terms" element={<TermsAndConditions />} />
+        <Route path="/theaters" element={<Theaters />} />
 
         {/* Admin Routes (Nested) */}
         <Route path="/admin" element={<AdminLayout />}>

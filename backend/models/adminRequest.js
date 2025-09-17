@@ -2,6 +2,8 @@ import mongoose from "mongoose";
 
 const adminRequestSchema = new mongoose.Schema({
   user: { type: mongoose.Schema.Types.ObjectId, ref: "User", required: true },
+  theaterEmail: { type: String, required: true },
+  theaterPhone: { type: String, required: true },
   theaterName: { type: String, required: true },
   location: { type: String, required: true },
   seats: { type: Number, required: true },
