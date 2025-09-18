@@ -3,9 +3,11 @@ import { Outlet, Link } from "react-router-dom";
 import { TfiLayoutGrid2, TfiLayoutListThumb } from "react-icons/tfi";
 import { CgAddR, CgIfDesign } from "react-icons/cg";
 import { useSelector } from "react-redux";
+import UseGetSingleTheater from "../hooks/UseGetSingleTheater";
 
 const AdminLayout = () => {
   const user = useSelector((state)=>state.auth.user)
+  UseGetSingleTheater(user.theater._id);
   return (
     <div>
       {/* Top Navbar */}

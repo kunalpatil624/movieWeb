@@ -9,12 +9,17 @@ import {
   TableRow,
 } from "@/components/ui/table"
 import { dummyDashboardData } from '../data/dummyDashboardData'
+import { useSelector } from 'react-redux'
+import UseGetSingleTheater from '../hooks/UseGetSingleTheater'
 
 const ListShows = () => {
+  const theater = useSelector((state) => state.auth.user.theater);
+  const shows = useSelector((state)=> state.theater.singleTheater.shows);
+  UseGetSingleTheater(theater._id);
   return (
     <div className="overflow-x-auto">
-      <h1 className='font-medium text-2xl mb-4'>
-        List <span className='underline text-red-700'>Shows</span>
+      <h1 className="font-medium text-2xl mb-4">
+        List <span className="underline text-red-700">Shows</span>
       </h1>
       <Table>
         <TableCaption>A list of your recent invoices.</TableCaption>
@@ -27,24 +32,24 @@ const ListShows = () => {
           </TableRow>
         </TableHeader>
         <TableBody>
-          {
-            dummyDashboardData.activeShows.map((show, idx) => (
-              <TableRow key={idx}>
-                <TableCell>{show.movie.title}</TableCell>
-                <TableCell>{new Date(show.showDateTime).toLocaleString("en-IN", {
-                weekday: "long",
+          {shows.map((show, idx) => (
+            <TableRow key={idx}>
+              <TableCell>{show.movie.title}</TableCell>
+              <TableCell>
+              {new Date(show.dateTime).toLocaleDateString("en-IN", {
+                weekday:"short",
                 year: "numeric",
                 month: "long",
                 day: "numeric",
-                hour: "2-digit",
-                minute: "2-digit",
-                hour12: true
-              })}</TableCell>
-                <TableCell>{show.totalBookings}</TableCell>
-                <TableCell>{show.totalRevenue}</TableCell>
-              </TableRow>
-            ))
-          }
+                hour:"numeric",
+                minute:"2-digit",
+                hour12:true
+              })} {show.time}
+              </TableCell>
+              <TableCell>{show.bookingSeates} Soon</TableCell>
+              <TableCell className="text-right">{show.totalRevenue} Soon</TableCell>
+            </TableRow>
+          ))}
           <TableRow>
             <TableCell className="font-medium">INV001</TableCell>
             <TableCell>Paid</TableCell>
@@ -54,7 +59,7 @@ const ListShows = () => {
         </TableBody>
       </Table>
     </div>
-  )
+  );
 }
 
 export default ListShows

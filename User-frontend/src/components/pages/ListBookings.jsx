@@ -14,7 +14,7 @@ const ListBookings = () => {
     <div>
       <div className="overflow-x-auto">
             <h1 className='font-medium text-2xl mb-4'>
-              List <span className='underline text-red-700'>Shows</span>
+              List <span className='underline text-red-700'>Booking</span>
             </h1>
             <Table>
               <TableCaption>A list of your recent invoices.</TableCaption>

@@ -6,6 +6,6 @@ import { isUserOrSuperAdmin } from '../middlewares/isUserOrSuperAdmin .js';
 const router = express.Router();
 
 router.route("/").get(isUserOrSuperAdmin, getTheaters);
-router.route("/:id").post(isUserOrSuperAdmin, getTheaterById);
-router.route("/:id/update").post(isAuthenticated, updateTheater)
+router.route("/:id").get(isUserOrSuperAdmin, getTheaterById);
+router.route("/:id/update").put(isAuthenticated, updateTheater)
 export default router;

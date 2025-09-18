@@ -3,6 +3,7 @@ import jwt from 'jsonwebtoken'
 import bcrypt from "bcryptjs";
 import nodemailer from "nodemailer";
 import { transporter } from "../config/nodemailer.js";
+import { model } from "mongoose";
 
 const otpStore = {};
 
@@ -101,7 +102,7 @@ export const login = async (req, res)=> {
       });
     };
     
-    let user = await User.findOne({email}).populate("theater").populate("theaterRequestDetails");
+    let user = await User.findOne({email}).populate("theater","_id owner").populate("theaterRequestDetails");
     if(!user){
       return res.status(400).json({
         message:"Incorrect email or password!",

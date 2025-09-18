@@ -8,7 +8,7 @@ import { useSelector } from 'react-redux';
 import { MdMarkEmailRead, MdPhoneCallback } from 'react-icons/md';
 import { Button } from "@/components/ui/button"
 const AdminDashboard = () => {
-  const theater = useSelector((state)=> state.auth.user.theater)
+  const theater = useSelector((state)=> state.theater.singleTheater)
   return (
     <div>
       <div>
@@ -92,7 +92,7 @@ const AdminDashboard = () => {
           </div>
         </div>
         <p className="mt-5 font-semibold">Active Shows</p>
-        <DeshboardCards dummyDashboardData={dummyDashboardData} />
+        <DeshboardCards movieData={theater.shows} />
       </div>
     </div>
   );

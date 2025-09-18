@@ -55,51 +55,33 @@ const handleSubmit = async () => {
   }
 
   try {
-    // Group shows by movieId + date
-    const groupedShows = {};
-
-    shows.forEach(show => {
-      const movieId = show.movie._id;
-      const date = show.dateTime.split("T")[0];
-      const time = show.dateTime.split("T")[1];
-
-      const key = movieId + "_" + date;
-
-      if (!groupedShows[key]) {
-        groupedShows[key] = {
-          movieId,
-          theaterId: theater._id,
-          date,
-          time: [],
-          showPrice: Number(show.price),
-          totalSeates: theater.seats
-        };
-      }
-
-      groupedShows[key].time.push(time);
-    });
-
-    // Send each grouped show to backend
-    for (let key in groupedShows) {
-      const payload = groupedShows[key];
+    for (let show of shows) {
+      const payload = {
+        movieId: show.movie._id,
+        theaterId: theater._id,
+        dateTime: show.dateTime,  // ✅ direct bhej do
+        showPrice: Number(show.price),
+        totalSeates: theater.seats
+      };
 
       const res = await axios.post(`${SHOW_API_AND_POINT}/add`, payload, { withCredentials: true });
 
       if (res.data.success) {
         toast.success(res.data.message);
-        return;
+      } else {
+        toast.error(res.data.message);
       }
     }
 
-    toast.error(res.data.message);
     setShows([]);
     setSelectedMovie(null);
 
   } catch (error) {
     console.log(error);
-    toast.error(error?.response?.data?.message);
+    toast.error(error?.response?.data?.message || "Something went wrong");
   }
 };
+
 
 
 

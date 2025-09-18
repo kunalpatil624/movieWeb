@@ -20,10 +20,10 @@ const TrendingShow = () => {
             <p>Kow Showing</p>
             <Button className='hover:cursor-pointer group' variant="none">View All <FaArrowRight className='group-hover:translate-x-0.5 transition h-4.5 w-4.5'/></Button>
         </div>
-        <div id='movieDAta ' className='flex flex-wrap mt-10 gap-8 justify-center'>
+        <div id='movieDAta ' className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 gap-8 justify-between items-center'>
             {
                 movies.slice(0,6).map((movie) => (
-                    <div key={movie._id} onClick={()=>navigate(`movies/movie/${movie._id}`)}>
+                    <div key={movie._id} onClick={()=>navigate(`movies/movie/${movie._id}`)} className=''>
                         <MovieCard key={movie.id} movie={movie}/>
                     </div>
                 ))

@@ -31,19 +31,20 @@ const Movies = () => {
   }
 
   return (
-    <div className="px-6 md:px-16 lg:px-24 xl:px-44 overflow-hidden my-40">
-      <div className="flex flex-wrap mt-10 gap-8 justify-center">
-        {movies.map((movie) => (
-          <div
-            key={movie.id}
-            onClick={() => navigate(`movie/${movie.id}`)}
-            className="cursor-pointer"
-          >
-            <MovieCard movie={movie} />
-          </div>
-        ))}
+    <div className="px-6 md:px-16 lg:px-24  overflow-hidden my-40">
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6">
+    {movies.map((movie) => (
+      <div
+        key={movie.id}
+        onClick={() => navigate(`movie/${movie.id}`)}
+        className="cursor-pointer"
+      >
+        <MovieCard movie={movie} />
       </div>
-    </div>
+    ))}
+  </div>
+</div>
+
   );
 };
 
