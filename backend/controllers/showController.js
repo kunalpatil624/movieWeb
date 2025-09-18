@@ -123,6 +123,36 @@ export const getShowById = async (req, res) => {
   }
 };
 
+// controllers/showController.js
+export const getShowsByMovieAndDate = async (req, res) => {
+  try {
+    const { movieId, date } = req.params; // date in YYYY-MM-DD format
+
+    if (!movieId || !date) {
+      return res.status(400).json({ success: false, message: "MovieId & date required" });
+    }
+
+    // Start & end of day to match all shows on that date
+    const start = new Date(date + "T00:00:00.000Z");
+    const end = new Date(date + "T23:59:59.999Z");
+
+    const shows = await Show.find({
+      movie: movieId,
+      dateTime: { $gte: start, $lte: end }
+    }).populate("theater");
+
+    if (!shows || shows.length === 0) {
+      return res.status(404).json({ success: false, message: "No shows found" });
+    }
+
+    return res.status(200).json({ success: true, shows });
+  } catch (error) {
+    console.error(error);
+    return res.status(500).json({ success: false, message: "Server error" });
+  }
+};
+
+
 // ✅ Update show
 export const updateShow = async (req, res) => {
   try {

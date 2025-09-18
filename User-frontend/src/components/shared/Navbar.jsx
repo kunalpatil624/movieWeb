@@ -71,14 +71,14 @@ const Navbar = () => {
               Login
             </Button>
           ) : (
-            <DropdownMenu>
+            <DropdownMenu >
               <DropdownMenuTrigger>
                 <Avatar>
                   <AvatarImage src={user.imageUrl} />
                   <AvatarFallback>CN</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
-              <DropdownMenuContent>
+              <DropdownMenuContent className='bg-blend-saturation'>
                 <DropdownMenuLabel>My Account</DropdownMenuLabel>
                 <DropdownMenuSeparator />
                 <DropdownMenuItem

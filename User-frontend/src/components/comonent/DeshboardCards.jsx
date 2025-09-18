@@ -11,7 +11,7 @@ const DashboardCards = ({ movieData }) => {
   }
 
   return (
-    <div className="relative flex flex-wrap gap-6 mt-4 max-w-5xl">
+    <div className="relative grid grid-cols-2 md:grid-cols-2 lg:grid-cols-4 xl:grid-cols-4 gap-3 mt-4 max-w-5xl">
       {movieData.map((show, idx) => (
         <div
           key={idx}

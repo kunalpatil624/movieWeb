@@ -13,7 +13,7 @@ const MovieCard = ({ movie }) => {
   };
 
   return (
-    <div className="flex flex-col justify-between p-3 bg-gray-800 rounded-2xl hover:-translate-y-1 transition duration-300 w-full">
+    <div className="flex flex-col justify-between p-3 border border-red-800 rounded-2xl hover:-translate-y-1 transition duration-300 w-full">
       {/* Image full width column ke andar adjust hogi */}
       <img
         className="rounded-lg h-48 sm:h-56 md:h-64 w-full object-cover"
@@ -30,13 +30,13 @@ const MovieCard = ({ movie }) => {
       <div className="flex justify-between items-center mt-4 pb-3">
         <Button
           onClick={() => navigate(`movies/movie/${movie._id}`)}
-          className="text-white hover:bg-[#f84566bf] bg-[#F84565] hover:cursor-pointer"
+          className="text-white hover:bg-[#f84566bf] bg-[#F84565] hover:cursor-pointer w-22 sm:w-25"
         >
           Buy Tickets
         </Button>
         <p className="flex items-center justify-center text-sm gap-1">
           <FaStar className="inline w-4 h-4 text-[#F84565]" />
-          {movie.rating}
+          {movie.vote_average}
         </p>
       </div>
     </div>

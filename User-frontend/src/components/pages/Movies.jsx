@@ -32,11 +32,11 @@ const Movies = () => {
 
   return (
     <div className="px-6 md:px-16 lg:px-24  overflow-hidden my-40">
-  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6">
+  <div className="grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4  gap-6 pt-2">
     {movies.map((movie) => (
       <div
         key={movie.id}
-        onClick={() => navigate(`movie/${movie.id}`)}
+        onClick={() => navigate(`movie/${movie._id}`)}
         className="cursor-pointer"
       >
         <MovieCard movie={movie} />

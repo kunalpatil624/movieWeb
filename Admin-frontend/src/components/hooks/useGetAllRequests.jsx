@@ -18,7 +18,6 @@ const useGetAllRequests = () => {
 
         if (res.data.success) {
           dispatch(setRequests(res.data.requests));
-          toast.success(res.data.message);
         }
       } catch (error) {
         console.log(error);

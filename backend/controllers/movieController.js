@@ -77,6 +77,9 @@ import {Movie} from "../models/movie.js";
 // };
 
 export const addMovie = async (req, res) => {
+  if (!req.body) {
+      return res.status(400).json({ message: "Request body missing!" });
+    }
   try {
     const {
       moviName,
@@ -84,6 +87,7 @@ export const addMovie = async (req, res) => {
       trailer,
       releaseDate,
       runtime,
+      vote_average,
       genres,
       description,
     } = req.body;
@@ -146,6 +150,7 @@ export const addMovie = async (req, res) => {
       trailerId,
       releaseDate,
       runtime,
+      vote_average,
       genres: genres?.split(","),
       casts: castArray,
       poster: posterUrl, // 👈 Cloudinary URL
@@ -230,52 +235,82 @@ export const getMovieById = async(req, res)=>{
     };
 }
 
-export const updateMovie = async(req, res)=> {
+export const updateMovie = async (req, res) => {
   try {
-    const {title,description,posterUrl,trailer,releaseDate,originalLanguage,tagline,genres,casts,vote_average,runtime} = req.body;
     const movieId = req.params.id;
-
     const movie = await Movie.findById(movieId);
-    if(!movie){
-      return res.status(400).json({
-        message:"Movie not found!",
-        success:false
+    if (!movie) {
+      return res.status(404).json({
+        message: "Movie not found!",
+        success: false,
       });
-    };
-
-    let genresArray;
-    if(genres){
-        genresArray = genres.split(",");
     }
 
-    //update data
-    if(title) movie.title = title;
-    if(description) movie.description = description;
-    if(posterUrl) movie.posterUrl = posterUrl;
-    if(trailer) movie.trailer = trailer;
-    if(releaseDate) movie.releaseDate = releaseDate;
-    if(originalLanguage) movie.originalLanguage = originalLanguage;
-    if(tagline) movie.tagline = tagline;
-    if(genres) movie.genres = genresArray;
-    if(casts) movie.casts = casts;
-    if(vote_average) movie.vote_average = vote_average;
-    if(runtime) movie.runtime = runtime;
-      
+    // Text fields
+    const {
+      moviName,
+      language,
+      trailer,
+      releaseDate,
+      runtime,
+      vote_average,
+      genres,
+      description,
+    } = req.body;
+
+    // Files
+    const posterFile = req.files?.poster?.[0];
+    const castImages = req.files?.castImages || [];
+    const casts = req.body.cast ? JSON.parse(req.body.cast) : [];
+
+    // Update poster if new file uploaded
+    if (posterFile) {
+      movie.poster = await uploadToCloudinary(posterFile.buffer, "movies");
+    }
+
+    // Update casts if given
+    if (casts.length > 0) {
+      const updatedCasts = await Promise.all(
+        casts.map(async (c, i) => {
+          let imageUrl = c.imageUrl || null;
+          if (castImages[i]) {
+            imageUrl = await uploadToCloudinary(
+              castImages[i].buffer,
+              "movies/cast"
+            );
+          }
+          return { name: c.name, imageUrl };
+        })
+      );
+      movie.casts = updatedCasts;
+    }
+
+    // Update other fields
+    if (moviName) movie.title = moviName;
+    if (language) movie.originalLanguage = language;
+    if (trailer) movie.trailer = trailer;
+    if (releaseDate) movie.releaseDate = releaseDate;
+    if (runtime) movie.runtime = runtime;
+    if (vote_average) movie.vote_average = vote_average;
+    if (genres) movie.genres = genres.split(",");
+    if (description) movie.description = description;
+
     await movie.save();
 
     return res.status(200).json({
-      message:"Movie updated successfully!",
+      message: "Movie updated successfully!",
       movie,
-      success:true
-    })
+      success: true,
+    });
   } catch (error) {
-    console.log(error);
-        return res.status(400).json({
-            message:"Internal server error",
-            success:true
-        });
+    console.error("❌ Movie Update Error:", error);
+    return res.status(500).json({
+      message: "Internal server error!",
+      success: false,
+    });
   }
-}
+};
+
 
 export const deleteMovie = async (req, res) => {
   try {
