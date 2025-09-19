@@ -20,7 +20,7 @@ const port = 3000;
 app.use(express.json());
 app.use(clerkMiddleware())
 app.use(cors({
-    origin: ["http://localhost:5173" ,"http://localhost:5174", "https://movieweb-1-14gu.onrender.com"],
+    origin: ["http://localhost:5173" ,"http://localhost:5174", "https://movie-web-user-frontend.vercel.app/"],
     credentials: true,
 }));
 app.use(express.urlencoded({ extended: true }));
