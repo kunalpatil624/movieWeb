@@ -22,7 +22,7 @@ export const AddMovie = () => {
     vote_average:"",
     genres: "",
     description: "",
-    poster: null, // 👈 file yahan store hoga
+    poster: null, 
   });
 
   const handleCastChange = (index, field, value) => {

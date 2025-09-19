@@ -1,32 +1,84 @@
+import React, { useState } from "react";
+import { useSelector } from "react-redux";
 import { FaArrowRight, FaCalendar, FaClock } from "react-icons/fa";
-import { Button } from "@/components/ui/button"
+import { Button } from "@/components/ui/button";
+import { useEffect } from "react";
 
-export default function HeroSection() {
+export default function LatestMoviesSection() {
+  const movies = useSelector((state) => state.movie.movies); // redux state
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  // Latest 4 movies
+  const latestMovies = movies.slice(-4);
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prev) =>
+        prev < latestMovies.length - 1 ? prev + 1 : 0
+      );
+    }, 4000); // 5000ms = 5s
+
+    return () => clearInterval(interval); // cleanup
+  }, [latestMovies.length]);
+  const handlePrev = () => {
+    setCurrentIndex((prev) => (prev > 0 ? prev - 1 : latestMovies.length - 1));
+  };
+
+  const handleNext = () => {
+    setCurrentIndex((prev) => (prev < latestMovies.length - 1 ? prev + 1 : 0));
+  };
+
+  if (!latestMovies || latestMovies.length === 0) return null;
+
+  const movie = latestMovies[currentIndex];
+
   return (
-    <div className="w-full min-h-screen bg-[url('https://res.cloudinary.com/dtyuevzyx/image/upload/v1755086758/black-panther-4k-movie-poster-vi_rm5lp0.jpg')] bg-cover bg-center">
-      <div className="flex flex-col items-start justify-center gap-4 px-6 md:px-16 lg:px-36 min-h-screen text-white bg-black/60">
-        <img
-          src="https://res.cloudinary.com/dtyuevzyx/image/upload/v1754551933/deg04zd-91232057-059b-4a17-906b-126292445d7f_mfog0x.png"
-          alt="Marvel Logo"
-          className="h-11"
-        />
+    <div
+      className="w-full min-h-screen bg-cover bg-center relative transition-all duration-500"
+      style={{ backgroundImage: `url(${movie.poster})` }}
+    >
+      <div className="absolute inset-0 bg-black/60 flex items-center px-6 md:px-16 lg:px-36">
+        <div className="flex flex-col md:flex-row items-start gap-6 max-w-6xl mx-auto bg-black/40 p-6 rounded-lg">
+          {/* Poster Left */}
+          <img
+            src={movie.poster}
+            alt={movie.title}
+            className="w-full md:w-1/3 h-auto rounded-lg object-cover"
+          />
 
-        <h1 className="text-4xl md:text-6xl font-bold leading-tight">
-          Guardians <br /> of the Galaxy
-        </h1>
+          {/* Details Right */}
+          <div className="flex-1 text-white flex flex-col gap-3">
+            <h1 className="text-3xl md:text-5xl font-bold leading-tight">
+              {movie.title}
+            </h1>
 
-        <p className="text-sm md:text-base text-slate-200 flex flex-wrap items-center gap-1">
-          Action | Adventure | Sci-Fi |<FaCalendar className="inline" /> 2018<FaClock className="inline ml-2" /> 2h 8m
-        </p>
+            <p className="text-sm md:text-base text-slate-200 flex flex-wrap items-center gap-2">
+              {movie.genres?.join(" | ")} | <FaCalendar className="inline" />{" "}
+              {movie.releaseDate?.split("-")[0]} <FaClock className="inline ml-2" />{" "}
+              {movie.runtime}
+            </p>
 
-        <p className="max-w-2xl text-slate-300">
-          In a post-apocalyptic world where cities ride on wheels and consume
-          each other to survive, two people meet in London and try to stop a
-          conspiracy.
-        </p>
-        <Button className='text-white hover:bg-[#f84566bf] bg-[#F84565] hover:cursor-pointer'>Explore Movie <FaArrowRight/></Button>
+            <p className="text-slate-300">{movie.description}</p>
+
+            <Button className="text-white hover:bg-[#f84566bf] bg-[#F84565] w-max mt-2">
+              Explore Movie <FaArrowRight className="ml-1" />
+            </Button>
+          </div>
+        </div>
       </div>
+
+      {/* Navigation Buttons */}
+      <button
+        onClick={handlePrev}
+        className="absolute left-4 top-1/2 -translate-y-1/2 text-white bg-black/40 p-2 rounded-full hover:bg-red-700 transition"
+      >
+        &#10094;
+      </button>
+      <button
+        onClick={handleNext}
+        className="absolute right-4 top-1/2 -translate-y-1/2 text-white bg-black/40 p-2 rounded-full hover:bg-red-700 transition"
+      >
+        &#10095;
+      </button>
     </div>
   );
 }
-

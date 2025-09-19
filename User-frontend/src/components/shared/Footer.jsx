@@ -4,11 +4,11 @@ import { useNavigate } from 'react-router-dom';
 const Footer = () => {
   const navigate = useNavigate()
   return (
-    <footer className='px-6 md:px-16 lg:px-36 mt-40 w-full text-gray-300'>
+    <footer className='px-6 md:px-16 lg:px-36 mt-20 w-full text-gray-300'>
       <div className='flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500 pb-14'>
         <div className='w-96'>
           <img className='w-35' src="https://res.cloudinary.com/dtyuevzyx/image/upload/v1754556239/ChatGPT_Image_Aug_7_2025_02_09_46_PM_vzt1bq.png" alt="company logo" />
-          <p className='mt-6 text-sm w-auto'>
+          <p className='mt-6 text-sm w-xs md:w-sm'>
             Lorem Ipsum has been the industry's standard dummy text ever since the 1500s.
           </p>
           <div className='flex items-center gap-3 mt-4'>
@@ -17,7 +17,7 @@ const Footer = () => {
           </div>
         </div>
 
-        <div className='flex-1 flex flex-col md:flex-row items-start md:justify-end gap-10 md:gap-40'>
+        <div className='flex items-start md:justify-end mb-10 gap-10 md:gap-40'>
           <div>
             <p className='mb-5'>Company</p>
             <ul>

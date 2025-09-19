@@ -11,6 +11,7 @@ import {
 import { dummyDashboardData } from '../data/dummyDashboardData'
 import useGetAllRequests from '../hooks/useGetAllRequests'
 import { useSelector } from 'react-redux'
+import { Button } from "@/components/ui/button"
 
 const AdminRequests = () => {
     useGetAllRequests();
@@ -27,6 +28,7 @@ const AdminRequests = () => {
               <TableHead className="w-[100px]">User Name</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Contact</TableHead>
+              <TableHead>Earnings</TableHead>
               <TableHead className="text-right">Earnings</TableHead>
             </TableRow>
           </TableHeader>
@@ -34,7 +36,7 @@ const AdminRequests = () => {
             {
               requests.map((request, idx) => (
                 <TableRow key={idx}>
-                  <TableCell>{request.user.name}</TableCell>
+                  <TableCell>{request.user.fullName}</TableCell>
                   <TableCell>{new Date(request.createdAt).toLocaleString("en-IN", {
                   weekday: "short",
                   year: "numeric",
@@ -46,6 +48,11 @@ const AdminRequests = () => {
                 })}</TableCell>
                   <TableCell>{request.theaterPhone}</TableCell>
                   <TableCell>{request.theaterEmail}</TableCell>
+                  <TableCell className="text-right">
+                    <div>
+                      <Button className='cursor-pointer'>More-info</Button>
+                    </div>
+                  </TableCell>
                 </TableRow>
               ))
             }

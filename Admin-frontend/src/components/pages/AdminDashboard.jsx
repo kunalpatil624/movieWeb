@@ -4,8 +4,12 @@ import { LuCircleDollarSign } from "react-icons/lu";
 import { FaUsers } from "react-icons/fa";
 import { dummyDashboardData } from '../data/dummyDashboardData';
 import DeshboardCards from '../DeshboardCards';
+import useGetAllMovies from '../hooks/UseGetAllMovies';
+import { useSelector } from 'react-redux';
 
 const AdminDashboard = () => {
+  useGetAllMovies();
+  const movies = useSelector((state)=> state.movie.movies)
   return (
     <div>
         <div>
@@ -45,7 +49,7 @@ const AdminDashboard = () => {
             </div>
           </div>
           <p className='mt-5 font-semibold'>Active Shows</p>
-          <DeshboardCards dummyDashboardData={dummyDashboardData}/>
+          <DeshboardCards movieData = {movies}/>
         </div>
     </div>
   )

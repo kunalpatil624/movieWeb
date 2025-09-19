@@ -1,6 +1,7 @@
 import { Movie } from "../models/movie.js";
 import Theater from "../models/theater.js";
 import { Show } from "../models/show.js";
+import { generateRandomSeats } from "../utils/generateSeats.js";
 
 // ✅ Create Show
 export const createShow = async (req, res) => {
@@ -126,29 +127,26 @@ export const getShowById = async (req, res) => {
 // controllers/showController.js
 export const getShowsByMovieAndDate = async (req, res) => {
   try {
-    const { movieId, date } = req.params; // date in YYYY-MM-DD format
+    const { id, date } = req.params;
 
-    if (!movieId || !date) {
-      return res.status(400).json({ success: false, message: "MovieId & date required" });
-    }
-
-    // Start & end of day to match all shows on that date
-    const start = new Date(date + "T00:00:00.000Z");
-    const end = new Date(date + "T23:59:59.999Z");
-
-    const shows = await Show.find({
-      movie: movieId,
-      dateTime: { $gte: start, $lte: end }
-    }).populate("theater");
+    // current date ke shows
+    let shows = await Show.find({ movieId: id, date });
 
     if (!shows || shows.length === 0) {
-      return res.status(404).json({ success: false, message: "No shows found" });
+      // agar iss date ke liye nahi mila, toh pichla (latest) show nikal lo
+      shows = await Show.find({ movieId: id }).sort({ date: -1 }).limit(1);
     }
 
-    return res.status(200).json({ success: true, shows });
-  } catch (error) {
-    console.error(error);
-    return res.status(500).json({ success: false, message: "Server error" });
+    // random seats add kar do (demo ke liye 60% booked)
+    shows = shows.map((s) => ({
+      ...s._doc,
+      bookingSeates: generateRandomSeats(),
+    }));
+
+    res.json({ shows });
+  } catch (err) {
+    console.error(err);
+    res.status(500).json({ message: "Server error" });
   }
 };
 
