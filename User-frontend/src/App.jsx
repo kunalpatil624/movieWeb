@@ -15,7 +15,7 @@ import AdminDashboard from "./components/pages/AdminDashboard.jsx";
 import { AddShow } from "./components/pages/AddShow.jsx";
 import ListShows from "./components/pages/ListShows.jsx";
 import ListBookings from "./components/pages/ListBookings.jsx";
-import ViewProfile from "./components/pages/viewProfile.jsx";
+import ViewProfile from "./components/pages/ViewProfile.jsx";
 import AdminRequest from "./components/pages/AdminRequest.jsx";
 import TermsAndConditions from "./components/pages/TermsAndConditions.jsx";
 import Theaters from "./components/pages/Theaters.jsx";
