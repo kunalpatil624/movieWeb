@@ -2,6 +2,7 @@ import React from "react";
 import axios from "axios";
 import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
+import { PAYMENT_API_AND_POINT } from "./utills/constand";
 
 const PaymentButton = ({ amount, seats, showId, userId }) => {
   const navigate = useNavigate();
@@ -24,7 +25,7 @@ const PaymentButton = ({ amount, seats, showId, userId }) => {
 
     try {
       const orderRes = await axios.post(
-        "http://localhost:3000/api/payment/create-order",
+        `${PAYMENT_API_AND_POINT}/create-order`,
         { amount }
       );
       const order = orderRes.data;
@@ -39,7 +40,7 @@ const PaymentButton = ({ amount, seats, showId, userId }) => {
         handler: async function (response) {
           try {
             // Save booking to backend
-            await axios.post("http://localhost:3000/api/payment/save-booking", {
+            await axios.post(`${PAYMENT_API_AND_POINT}/save-booking`, {
               user: userId, // ✅ schema field ke naam ke saath
               show: showId, // ✅
               bookedSeats: seats, // ✅
@@ -75,7 +76,7 @@ const PaymentButton = ({ amount, seats, showId, userId }) => {
 
   return (
     <button
-      className="bg-red-600 text-white px-4 py-2 rounded mt-4 hover:bg-red-800"
+      className="hover:cursor-pointer"
       onClick={handlePayment}
     >
       Pay ₹{amount}

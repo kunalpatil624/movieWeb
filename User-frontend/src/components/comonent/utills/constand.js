@@ -6,3 +6,4 @@ export const REQUEST_API_AND_POINT= `${BASE_URL}/request`
 export const THEATER_API_AND_POINT= `${BASE_URL}/theaters`
 export const SHOW_API_AND_POINT= `${BASE_URL}/shows`
 export const BOOKING_API_AND_POINT= `${BASE_URL}/bookings`
+export const PAYMENT_API_AND_POINT= `${BASE_URL}/payment`
