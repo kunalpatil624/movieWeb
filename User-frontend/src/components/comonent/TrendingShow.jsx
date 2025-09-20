@@ -22,7 +22,7 @@ const TrendingShow = () => {
         </div>
         <div id='movieDAta ' className='grid grid-cols-2 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 mt-10 gap-8 justify-between items-center'>
             {
-                movies.slice(0,6).map((movie) => (
+                movies.slice(0,4).map((movie) => (
                     <div key={movie._id} onClick={()=>navigate(`movies/movie/${movie._id}`)} className=''>
                         <MovieCard key={movie.id} movie={movie}/>
                     </div>

@@ -7,8 +7,11 @@ import toast from "react-hot-toast";
 import { GoArrowRight } from "react-icons/go";
 import { Button } from "@/components/ui/button";
 import { SHOW_API_AND_POINT } from "../comonent/utills/constand";
+import PaymentButton from "../comonent/PaymentButton";
+import { useSelector } from "react-redux";
 
 const SeatLayout = () => {
+  const  user  = useSelector((state) => state.auth.user);
   const { id, date } = useParams(); // movieId and date from URL
   const [selectedSeats, setSelectedSeats] = useState([]);
   const [selectedTime, setSelectedTime] = useState(null);
@@ -131,40 +134,6 @@ const SeatLayout = () => {
           </div>
         </div>
 
-        {/* Seat Layout */}
-        {/* <div className="relative flex-1 flex flex-col items-center max-md:mt-16">
-          <p className="text-2xl font-semibold mb-4">Select your seat</p>
-          <img
-            src="https://res.cloudinary.com/dtyuevzyx/image/upload/v1754900739/screenImage_mmg3rd.svg"
-            alt="screen"
-          />
-          <p className="text-gray-400 text-sm mb-6">SCREEN SIDE</p>
-          <div className="flex flex-col items-center mt-10 text-xs text-gray-300">
-            <div className="grid grid-cols-2 md:grid-cols-1 gap-8 md:gap-2 mb-6">
-              {groupRows[0].map((row) => renderSeats(row))}
-            </div>
-            <div className="grid grid-cols-2 gap-11">
-              {groupRows.slice(1).map((group, idx) => (
-                <div key={idx}>{group.map((row) => renderSeats(row))}</div>
-              ))}
-            </div>
-          </div>
-
-          <Button
-            className="hover:bg-[#f84566bf] bg-[#F84565] mt-10 rounded-full"
-            onClick={() => {
-              if (!selectedTime) return toast.error("Please select a show timing");
-              if (selectedSeats.length === 0)
-                return toast.error("Please select at least 1 seat");
-              // Navigate to checkout page with selected seats
-              navigate("/checkout", {
-                state: { showId: selectedTime._id, seats: selectedSeats },
-              });
-            }}
-          >
-            Proceed to checkout <GoArrowRight strokeWidth={3} className="w-4 h-4" />
-          </Button>
-        </div> */}
         <div className="relative flex-1 flex flex-col items-center max-md:mt-16">
   <p className="text-2xl font-semibold mb-4">Select your seat</p>
   <img
@@ -190,18 +159,26 @@ const SeatLayout = () => {
     </div>
   </div>
 
-  <Button className="hover:bg-[#f84566bf] bg-[#F84565] mt-10 rounded-full" 
-    onClick={() => {
+  <Button className="hover:bg-[#f84566bf] bg-[#F84565] mt-10 rounded-full">
+  {/* Instead of navigate, render PaymentButton */}
+  {selectedTime && selectedSeats.length > 0 ? (
+    <PaymentButton
+      amount={selectedSeats.length * 100} // ₹100 per seat
+      seats={selectedSeats}
+      showId={selectedTime._id}
+      userId={user?._id}
+    />
+  ) : (
+    <span onClick={() => {
       if (!selectedTime) return toast.error("Please select a show timing");
       if (selectedSeats.length === 0)
         return toast.error("Please select at least 1 seat");
-      navigate("/checkout", {
-        state: { showId: selectedTime._id, seats: selectedSeats },
-      });
-    }}
-  >
-    Proceed to checkout <GoArrowRight strokeWidth={3} className="w-4 h-4 ml-1" />
-  </Button>
+    }}>
+      Proceed to checkout <GoArrowRight strokeWidth={3} className="w-4 h-4 ml-1 inline" />
+    </span>
+  )}
+</Button>
+
 </div>
 
       </div>
