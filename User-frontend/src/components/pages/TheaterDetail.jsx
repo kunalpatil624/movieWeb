@@ -17,8 +17,8 @@ import { Button } from "@/components/ui/button";
 import toast from "react-hot-toast";
 
 const TheaterDetail = () => {
-  const { theaterId } = useParams();
-  UseGetSingleTheater(theaterId);
+  const { id } = useParams();
+  UseGetSingleTheater(id);
   const theater = useSelector((state) => state.theater.singleTheater);
 
   const [selectedDate, setSelectedDate] = useState(null);
@@ -26,6 +26,13 @@ const TheaterDetail = () => {
   const onlyDate = new Date(selectedTime).toISOString().split("T")[0];
 
   const navigate = useNavigate();
+if (!theater) {
+  return (
+    <div className="flex justify-center items-center h-96">
+      <p>Loading theater details...</p>
+    </div>
+  );
+}
 
   // 🔑 Next 4 din ki dates generate karne ka function
   function getNextFourDays() {

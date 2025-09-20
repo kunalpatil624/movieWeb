@@ -13,7 +13,7 @@ const theaterSlice = createSlice({
         setTheaters:(state, action) => {
             state.theaters = action.payload
         },
-        setSingleThater:(state, action) => {
+        setSingleTheater:(state, action) => {
             state.singleTheater = action.payload
         },
         setSearchTheaterByText:(state, action) => {
@@ -22,5 +22,5 @@ const theaterSlice = createSlice({
     },
 });
 
-export const {setTheaters, setSingleThater, setSearchTheaterByText} = theaterSlice.actions;
+export const {setTheaters, setSingleTheater, setSearchTheaterByText} = theaterSlice.actions;
 export default theaterSlice.reducer;
