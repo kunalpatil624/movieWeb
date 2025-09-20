@@ -1,4 +1,4 @@
-import { useLocation } from "react-router-dom";
+import { Navigate, useLocation } from "react-router-dom";
 import { Route, Routes } from "react-router-dom";
 import Home from "./components/pages/Home";
 import Navbar from "./components/shared/Navbar";
@@ -20,6 +20,7 @@ import AdminRequest from "./components/pages/AdminRequest.jsx";
 import TermsAndConditions from "./components/pages/TermsAndConditions.jsx";
 import Theaters from "./components/pages/Theaters.jsx";
 import TheaterDetail from "./components/pages/TheaterDetail.jsx";
+import PrivateRoute from "./components/comonent/PrivateRoute.jsx";
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -33,14 +34,15 @@ function App() {
       <ScrollToTop />
       <Routes>
         {/* User Routes */}
+        <Route path="/login&signup" element={<Navigate to="/" replace />} />
         <Route path="/" element={<Home />} />
         <Route path="/home" element={<Home />} />
-        <Route path="/profile" element={<ViewProfile/>} />
+        <Route path="/profile" element={<PrivateRoute><ViewProfile/></PrivateRoute>} />
         <Route path="/movies" element={<Movies />} />
         <Route path="/movies/movie/:id" element={<MovieDescription />} />
-        <Route path="/movies/:id/:date" element={<SeatLayout />} />
-        <Route path="/my-bookings" element={<MyBooking />} />
-        <Route path="/theater-request" element={<AdminRequest />} />
+        <Route path="/movies/:id/:date" element={<PrivateRoute><SeatLayout /></PrivateRoute>} />
+        <Route path="/my-bookings" element={<PrivateRoute><MyBooking /></PrivateRoute>} />
+        <Route path="/theater-request" element={<PrivateRoute><AdminRequest /></PrivateRoute>} />
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/theaters" element={<Theaters />} />
         <Route path="/theaters/theater/:id" element={<TheaterDetail />} />

@@ -3,11 +3,12 @@ import { useSelector } from "react-redux";
 import { FaArrowRight, FaCalendar, FaClock } from "react-icons/fa";
 import { Button } from "@/components/ui/button";
 import { useEffect } from "react";
+import { useNavigate } from "react-router-dom";
 
 export default function LatestMoviesSection() {
   const movies = useSelector((state) => state.movie.movies); // redux state
   const [currentIndex, setCurrentIndex] = useState(0);
-
+  const navigate = useNavigate()
   // Latest 4 movies
   const latestMovies = movies.slice(-4);
   useEffect(() => {
@@ -59,7 +60,7 @@ export default function LatestMoviesSection() {
 
             <p className="text-slate-300">{movie.description}</p>
 
-            <Button className="text-white hover:bg-[#f84566bf] bg-[#F84565] w-max mt-2">
+            <Button className="text-white hover:bg-[#f84566bf] bg-[#F84565] w-max mt-2" onClick={() => navigate(`movies/movie/${movie._id}`)}>
               Explore Movie <FaArrowRight className="ml-1" />
             </Button>
           </div>

@@ -14,7 +14,6 @@ import {
 } from "redux-persist";
 import storage from "redux-persist/lib/storage";
 import movieReducer from "./movieSlice";
-
 const persistConfig = {
   key: "root",
   storage,
