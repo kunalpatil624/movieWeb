@@ -9,6 +9,7 @@ import Login from "./components/pages/login";
 import ProtectedRoute from "./components/ProtectedRoute";
 import AdminLayout from "./components/AdminLayout ";
 import AdminRequests from "./components/pages/AdminRequests";
+import RequestDetail from "./components/RequestDetail";
 
 
 function App() {
@@ -23,6 +24,7 @@ function App() {
             <Route index element={<AdminDashboard />} />
             <Route path="add-movie" element={<AddMovie />} />
             <Route path="admin-requests" element={<AdminRequests />} />
+            <Route path="admin-requests/:id" element={<RequestDetail />} />
             <Route path="dashboard" element={<AdminDashboard />} />
             <Route path="add-show" element={<AddShow />} />
             <Route path="list-shows" element={<ListShows />} />

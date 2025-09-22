@@ -12,8 +12,10 @@ import { dummyDashboardData } from '../data/dummyDashboardData'
 import useGetAllRequests from '../hooks/useGetAllRequests'
 import { useSelector } from 'react-redux'
 import { Button } from "@/components/ui/button"
+import { useNavigate } from "react-router-dom";
 
 const AdminRequests = () => {
+  const navigate = useNavigate();
     useGetAllRequests();
     const requests = useSelector((state)=>state.request.requests)
     return (
@@ -50,7 +52,7 @@ const AdminRequests = () => {
                   <TableCell>{request.theaterEmail}</TableCell>
                   <TableCell className="text-right">
                     <div>
-                      <Button className='cursor-pointer'>More-info</Button>
+                      <Button onClick={()=> navigate(`/admin/admin-requests/${request._id}`)} className='cursor-pointer'>More-info</Button>
                     </div>
                   </TableCell>
                 </TableRow>

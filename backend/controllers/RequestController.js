@@ -210,12 +210,16 @@ export const getAllRequest = async (req, res) => {
 // Get request by ID
 export const getRequestById = async (req, res) => {
   try {
-    const requestId = req.params.id;
-    const request = await AdminRequest.findById(requestId)
+    // sirf id nikaalo params se
+    const { id } = req.params;
+console.log("Params:", id);
+
+    // ab id ko pass karo
+    const request = await AdminRequest.findById(id)
       .populate("user", "fullName email");
 
     if (!request) {
-      return res.status(400).json({
+      return res.status(404).json({
         message: 'Request not found!',
         success: false
       });
@@ -235,6 +239,7 @@ export const getRequestById = async (req, res) => {
     });
   }
 };
+
 
 // Update request (approve/reject)
 export const updateRequest = async (req, res) => {
