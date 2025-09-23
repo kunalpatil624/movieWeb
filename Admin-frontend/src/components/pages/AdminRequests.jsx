@@ -30,8 +30,9 @@ const AdminRequests = () => {
               <TableHead className="w-[100px]">User Name</TableHead>
               <TableHead>Date</TableHead>
               <TableHead>Contact</TableHead>
-              <TableHead>Earnings</TableHead>
-              <TableHead className="text-right">Earnings</TableHead>
+              <TableHead>Email</TableHead>
+              <TableHead>Status</TableHead>
+              <TableHead className="text-right">More-About</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
@@ -49,7 +50,8 @@ const AdminRequests = () => {
                   hour12: true
                 })}</TableCell>
                   <TableCell>{request.theaterPhone}</TableCell>
-                  <TableCell>{request.theaterEmail}</TableCell>
+                  <TableCell className='truncate'>{request.theaterEmail}</TableCell>
+                  <TableCell>{request.status}</TableCell>
                   <TableCell className="text-right">
                     <div>
                       <Button onClick={()=> navigate(`/admin/admin-requests/${request._id}`)} className='cursor-pointer'>More-info</Button>

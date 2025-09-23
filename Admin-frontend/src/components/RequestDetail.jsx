@@ -3,16 +3,17 @@ import UseGetSingleRequest from "./hooks/UseGetSingleRequest";
 import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
-import { Download, Eye } from "lucide-react";
+import { Download, Eye, Loader } from "lucide-react";
 import axios from "axios";
 import { ADMIN_REQUEST_API_AND_POINT } from "./utills/constand";
 import { toast } from "sonner";
+import { useState } from "react";
 
 const RequestDetail = () => {
   const { id } = useParams();
   UseGetSingleRequest(id);
   const request = useSelector((state) => state.request.singleRequest);
-
+  const [loading, setLoading] = useState(false);
   if (!request)
     return <p className="text-center text-gray-400 mt-20">Loading...</p>;
 
@@ -27,14 +28,17 @@ const RequestDetail = () => {
 
   const handleAcceptReject = async(status, rejectionReason)=> {
     try {
+      setLoading(true);
       const res = await axios.put(`${ADMIN_REQUEST_API_AND_POINT}/${id}/update`, {status, rejectionReason}, {withCredentials:true});
       if(res.data.success){
         toast.success(res.data.message)
+        setLoading(false);
         return;
       }
       toast.error(res?.data?.messsage);
     } catch (error) {
       toast.error(error?.response?.data?.message);
+      setLoading(false);
       console.log(error)
     }
   }
@@ -160,6 +164,12 @@ const RequestDetail = () => {
         </div>
       )}
       <div className="flex gap-2 ">
+        {
+          loading ? (
+            <Button><Loader className="animate-spin"/>Pleass wait...</Button>
+
+          ) : (
+            <div className="flex gap-2">
         <Button
         className='bg-red-600 hover:bg-red-800'
           onClick={() => handleAcceptReject("rejected", "Reason not specified")}
@@ -171,6 +181,9 @@ const RequestDetail = () => {
          onClick={() => handleAcceptReject("approved", "N/A")}>
           Accept
         </Button>
+            </div>
+          )
+        }
       </div>
     </div>
   );
