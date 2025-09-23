@@ -122,12 +122,12 @@ const handleSubmit = async () => {
       <div className='mt-5'>
         <label htmlFor="datetime" className='block text-sm font-medium mb-2'> Select Date and Time </label>
         <div className='inline-flex items-center gap-2 border border-gray-600 px-3 py-2 rounded-md'>
-          <input
+          <input 
             type="datetime-local"
             id="datetime"
             value={dateTime}
             onChange={(e) => setDateTime(e.target.value)}
-            className="outline-none rounded-md"
+            className="outline-none rounded-md w-auto  "
           />
           <Button
             type="button"
