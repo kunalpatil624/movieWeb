@@ -1,11 +1,12 @@
 import React from 'react'
 import { useNavigate } from 'react-router-dom';
-
+import { FaLinkedin, FaTwitter, FaFacebook } from "react-icons/fa";
 const Footer = () => {
   const navigate = useNavigate()
   return (
-    <footer className='px-6 md:px-16 lg:px-36 mt-20 w-full text-gray-300'>
-      <div className='flex flex-col md:flex-row justify-between w-full gap-10 border-b border-gray-500 pb-14'>
+    <footer className='px-6 md:px-16 lg:px-36 mt-20 w-full text-gray-300 pb-14'>
+      <div className='border-b border-gray-500 '>
+      <div className='flex flex-col md:flex-row justify-between w-full gap-10 '>
         <div className='w-96'>
           <img className='w-35' src="https://res.cloudinary.com/dtyuevzyx/image/upload/v1754556239/ChatGPT_Image_Aug_7_2025_02_09_46_PM_vzt1bq.png" alt="company logo" />
           <p className='mt-6 text-sm w-xs md:w-sm'>
@@ -42,6 +43,23 @@ const Footer = () => {
             </button>
           </div>
         </div>
+      </div >
+      <div className='mb-10'>
+        <div className="flex justify-center space-x-6 text-xl mb-2">
+          <a href="https://www.linkedin.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-700">
+            <FaLinkedin />
+          </a>
+          <a href="https://twitter.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-500">
+            <FaTwitter />
+          </a>
+          <a href="https://facebook.com" target="_blank" rel="noopener noreferrer" className="hover:text-blue-600">
+            <FaFacebook />
+          </a>
+        </div>
+        <p className="text-xs text-center text-gray-600">
+          © {new Date().getFullYear()} JobFind. All rights reserved.
+        </p>
+      </div>
       </div>
     </footer>
   );
