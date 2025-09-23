@@ -9,6 +9,10 @@ import { MdMarkEmailRead, MdPhoneCallback } from 'react-icons/md';
 import { Button } from "@/components/ui/button"
 const AdminDashboard = () => {
   const theater = useSelector((state)=> state.theater.singleTheater)
+  if (!theater) {
+  return <p className="text-center mt-10">Loading Theater Data...</p>;
+}
+
   return (
     <div>
       <div>
@@ -70,7 +74,7 @@ const AdminDashboard = () => {
             <div>
               <img
                 className="h-9 md:h-14 w-9 md:w-14 rounded-full"
-                src={theater.theaterLogo}
+                src={theater?.theaterLogo}
                 alt="admin"
               />
               <p className="mt-2">{theater.name}</p>
