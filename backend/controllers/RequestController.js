@@ -82,15 +82,16 @@ export const sendRequest = async (req, res) => {
 
     // Upload documents
     if (req.files?.documents) {
-      for (const file of req.files.documents) {
-        const url = await uploadToCloudinary(
-          file.buffer,
-          `${folder}/documents`,
-          file.originalname
-        );
-        request.documents.push(url);
-      }
-    }
+  for (const file of req.files.documents) {
+    const url = await uploadToCloudinary(
+      file.buffer,
+      `${folder}/documents`,
+      file.originalname,
+      "raw"  // ✅ Add this
+    );
+    request.documents.push(url);
+  }
+}
 
     // Upload theater images
     if (req.files?.theaterImages) {

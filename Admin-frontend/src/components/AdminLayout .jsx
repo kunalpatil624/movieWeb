@@ -9,7 +9,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from './redux/authSlice';
 import {toast} from 'sonner'
 import { Button } from "@/components/ui/button"
-
+import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 const AdminLayout  = () => {
   const navigate = useNavigate()
   const dispatch = useDispatch()
@@ -60,7 +60,7 @@ const AdminLayout  = () => {
                 <BiSolidCameraMovie className='inline mr-1 '/> <span className='hidden sm:inline'>Add Movie</span>
               </a>
               <a href="/admin/admin-requests" className="hover:text-red-500 text-center sm:text-left">
-                <BiSolidCameraMovie className='inline mr-1 '/> <span className='hidden sm:inline'>Admin Requests</span>
+                <VscGitPullRequestGoToChanges className='inline mr-1 '/> <span className='hidden sm:inline'>Admin Requests</span>
               </a>
               <a href="/admin/add-show" className="hover:text-red-500 text-center sm:text-left">
                <CgAddR className='inline mr-1 w-4 h-4 '/> <span className='hidden sm:inline'>Add Show</span>

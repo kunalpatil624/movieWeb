@@ -2,7 +2,7 @@ import React from "react";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import EditableField from "../comonent/EditableField";
-
+import { GrEdit } from "react-icons/gr";
 const ViewProfile = () => {
   const { user } = useSelector((store) => store.auth);
   return (
@@ -11,13 +11,26 @@ const ViewProfile = () => {
       <div className=" gap-8 shadow-1xl shadow-blue-200 rounded-2xl shadow-xl text-center px-0 md:px-9 mx-5 mb-10">
         <div className="flex flex-col md:flex-row gap-8">
        <div className="p-2">
-        <div>
-          <img
-            src={user?.imageUrl}
-            alt="profile"
-            className="w-28 h-28 rounded-full shadow-lg border-4 border-red-800"
-          />
-        </div>
+        <div className="relative w-28 h-28 mt-10">
+  {user?.imageUrl ? (
+    <img
+      src={user.imageUrl}
+      alt="profile"
+      className="w-28 h-28 rounded-full shadow-lg border-4 border-red-800 object-cover"
+    />
+  ) : (
+    <div className="w-28 h-28 rounded-full shadow-lg border-4 border-red-800  flex items-center justify-center text-xl font-bold text-white">
+      {user?.fullName
+        ? `${user.fullName.split(" ")[0][0]}${user.fullName.split(" ")[1]?.[0] || ""}`
+        : "U"} {/* U for unknown */}
+    </div>
+  )}
+
+  <button className="absolute top-1 right-1 bg-white rounded-full p-1 shadow-md hover:bg-gray-200">
+    <GrEdit className="w-5 h-5 text-gray-700" />
+  </button>
+</div>
+
 
         <div className="text-left">
           <h2 className="font-bold text-2xl text-gray-800">

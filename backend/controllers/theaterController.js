@@ -4,7 +4,7 @@ import Theater from "../models/theater.js";
 
 export const getTheaters = async(req, res) => {
     try {
-        const theaters = await Theater.find().sort({createtedAt}).populate("owner").populate("shows");
+        const theaters = await Theater.find().sort({ createdAt: -1 }).populate("owner").populate("shows");
         if(!theaters){
             return res.status(400).json({
                 message:"Theaters not found!",
