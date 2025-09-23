@@ -10,7 +10,7 @@ import { Button } from "@/components/ui/button"
 const AdminDashboard = () => {
   const theater = useSelector((state)=> state.theater.singleTheater)
   if (!theater) {
-  return <p className="text-center mt-10">Loading Theater Data...</p>;
+  return <p className="text-center mt-10">Loading Deshboard Data...</p>;
 }
 
   return (

@@ -13,7 +13,9 @@ const MyBooking = () => {
     const currency = import.meta.env.VITE_CURRENCY;
     const [bookings, setBookings] = useState([]);
     const [isLoading, setLoading] = useState(true);
-
+    if (!MyBookings) {
+  return <p className="text-center mt-10">Loading MyBookings Data...</p>;
+}
     
   return isLoading ? (
     <div className='relative mx-6 md:mx-16 lg:px-40 md:mt-40 min-h-[80vh] pt-0 sm:pt-0 max-sm:pt-30 '>

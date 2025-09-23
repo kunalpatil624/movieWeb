@@ -96,7 +96,7 @@ const Navbar = () => {
                 <DropdownMenuItem onClick={() => navigate("/profile")} className="cursor-pointer">
                   Profile
                 </DropdownMenuItem>
-                <DropdownMenuItem className="cursor-pointer">Billing</DropdownMenuItem>
+                <DropdownMenuItem onClick={()=> navigate("/my-bookings")} className="cursor-pointer">My Bookings</DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">Team</DropdownMenuItem>
                 <DropdownMenuItem className="cursor-pointer">Subscription</DropdownMenuItem>
                 {user?.role === "admin" && (
