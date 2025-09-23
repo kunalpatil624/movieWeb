@@ -87,7 +87,7 @@ const handleSubmit = async () => {
 
 
   return (
-    <div className='flex-1 px-4 py-10 md:px-10 h-[calc(100vh-64px)]'>
+    <div className='flex-1 px-4 md:px-10 h-[calc(100vh-64px)]'>
       <h1 className='font-medium text-2xl'>
         Add <span className='underline text-red-700'>Shows</span>
       </h1>
@@ -127,7 +127,7 @@ const handleSubmit = async () => {
             id="datetime"
             value={dateTime}
             onChange={(e) => setDateTime(e.target.value)}
-            className="outline-none rounded-md w-auto  "
+            className="outline-none rounded-md max-w-50  "
           />
           <Button
             type="button"
