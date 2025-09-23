@@ -11,7 +11,6 @@ const UseGetSingleTheater = (id) => {
             try {
                 const res = await axios.get(`${THEATER_API_AND_POINT}/${id}`);
                 if (res.data.success) {
-                    console.log(res.data.theater)
                     dispatch(setSingleTheater(res.data.theater));
                 } else {
                     console.log("Backend responded with error:", res.data.message);

@@ -4,6 +4,9 @@ import { useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { Button } from "@/components/ui/button";
 import { Download, Eye } from "lucide-react";
+import axios from "axios";
+import { ADMIN_REQUEST_API_AND_POINT } from "./utills/constand";
+import { toast } from "sonner";
 
 const RequestDetail = () => {
   const { id } = useParams();
@@ -22,6 +25,19 @@ const RequestDetail = () => {
     }
   };
 
+  const handleAcceptReject = async(status, rejectionReason)=> {
+    try {
+      const res = await axios.put(`${ADMIN_REQUEST_API_AND_POINT}/${id}/update`, {status, rejectionReason}, {withCredentials:true});
+      if(res.data.success){
+        toast.success(res.data.message)
+        return;
+      }
+      toast.error(res?.data?.messsage);
+    } catch (error) {
+      toast.error(error?.response?.data?.message);
+      console.log(error)
+    }
+  }
   return (
     <div className="max-w-6xl mx-auto p-6 space-y-8">
       {/* User & Theater Info */}
@@ -32,26 +48,29 @@ const RequestDetail = () => {
 
         <div className="grid md:grid-cols-2 gap-4 text-gray-200">
           <p>
-            <span className="font-medium">User:</span> {request.user?.fullName}
+            <span className="font-medium">User:</span> <span className="text-sm text-gray-400">{request.user?.fullName}</span>
           </p>
           <p>
             <span className="font-medium">Theater Name:</span>{" "}
-            {request.theaterName}
+            <span className="text-sm text-gray-400">{request.theaterName}</span>
           </p>
           <p>
-            <span className="font-medium">Location:</span> {request.location}
+            <span className="font-medium">Location:</span> 
+            <span className="text-sm text-gray-400">{request.location}</span>
           </p>
           <p>
-            <span className="font-medium">Email:</span> {request.theaterEmail}
+            <span className="font-medium">Email:</span>  
+            <span className="text-sm text-gray-400">{request.theaterEmail}</span>
           </p>
           <p>
-            <span className="font-medium">Phone:</span> {request.theaterPhone}
+            <span className="font-medium">Phone:</span> 
+            <span className="text-sm text-gray-400">{request.theaterPhone}</span>
           </p>
         </div>
 
         {/* Logo */}
         {request.theaterLogo && (
-          <div className="mt-4">
+          <div className="mt-4 ">
             <img
               src={request.theaterLogo}
               alt={request.theaterName}
@@ -105,7 +124,7 @@ const RequestDetail = () => {
           <h2 className="text-xl font-semibold mb-2 border-b border-gray-700 pb-1">
             Documents
           </h2>
-          <div className="flex flex-col gap-2 max-h-64 overflow-y-auto">
+          <div className="flex flex-col gap-2 max-h-64">
             {request.documents.map((doc, idx) => (
               <div
                 key={idx}
@@ -140,6 +159,19 @@ const RequestDetail = () => {
           </div>
         </div>
       )}
+      <div className="flex gap-2 ">
+        <Button
+        className='bg-red-600 hover:bg-red-800'
+          onClick={() => handleAcceptReject("rejected", "Reason not specified")}
+        >
+          Reject
+        </Button>
+        <Button
+        className='bg-blue-600 hover:bg-blue-800'
+         onClick={() => handleAcceptReject("approved", "N/A")}>
+          Accept
+        </Button>
+      </div>
     </div>
   );
 };

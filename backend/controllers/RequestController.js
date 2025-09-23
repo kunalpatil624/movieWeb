@@ -131,36 +131,57 @@ export const sendRequest = async (req, res) => {
 
     const user = await User.findById(userId);
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: user.email,
-      subject: "✅ Theater Request Submitted",
-      html: `
-        <h2>Hi ${user.fullName},</h2>
-        <p>Your theater request has been submitted successfully!</p>
-        <p><strong>Theater:</strong> ${theaterName}</p>
-        <p><strong>Location:</strong> ${location}</p>
-        <p><strong>Seats:</strong> ${seats}</p>
-        <p><strong>Priority:</strong> ${priority}</p>
-        <p>We will review your request shortly.</p>
-      `,
-    });
+  from: process.env.EMAIL_USER,
+  to: user.email,
+  subject: "✅ Theater Request Submitted",
+  html: `
+    <div style="font-family: Arial, sans-serif; padding:20px; background:#f9f9f9; color:#333;">
+      <div style="max-width:600px; margin:auto; background:#fff; border-radius:10px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.1)">
+        <h2 style="color:#007bff; text-align:center;">✅ Theater Request Submitted</h2>
+        <p>Hi <strong>${user.fullName}</strong>,</p>
+        <p>Your theater request has been <strong style="color:#007bff;">submitted successfully</strong> 🎉</p>
+        <p>Here are the details:</p>
+        <ul>
+          <li><strong>Theater:</strong> ${theaterName}</li>
+          <li><strong>Location:</strong> ${location}</li>
+          <li><strong>Seats:</strong> ${seats}</li>
+          <li><strong>Priority:</strong> ${priority}</li>
+        </ul>
+        <p>We will review your request shortly. Thank you for your submission 🙌</p>
+        <hr style="margin:20px 0;">
+        <p style="font-size:14px; color:#666;">This is an automated email. Please do not reply.</p>
+      </div>
+    </div>
+  `
+});
+
 
     // ✅ 2. Send Detailed Email to SuperAdmin
     await transporter.sendMail({
-      from: process.env.EMAIL_USER,
-      to: process.env.SUPERADMIN_EMAIL,
-      subject: "📝 New Theater Request Submitted",
-      html: `
-        <h2>New Theater Request</h2>
-        <p><strong>Name:</strong> ${theaterName}</p>
-        <p><strong>Location:</strong> ${location}</p>
-        <p><strong>Seats:</strong> ${seats}</p>
-        <p><strong>Priority:</strong> ${priority}</p>
-        <p><strong>Facilities:</strong> ${facilities}</p>
-        <p><strong>User:</strong> ${user.fullName} (${user.email})</p>
-        <p><strong>Logo:</strong> <img src="${theaterLogoUrl}" width="150"/></p>
-      `,
-    });
+  from: process.env.EMAIL_USER,
+  to: process.env.SUPERADMIN_EMAIL,
+  subject: "📝 New Theater Request Submitted",
+  html: `
+    <div style="font-family: Arial, sans-serif; padding:20px; background:#f9f9f9; color:#333;">
+      <div style="max-width:600px; margin:auto; background:#fff; border-radius:10px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.1)">
+        <h2 style="color:#6f42c1; text-align:center;">📝 New Theater Request</h2>
+        <p>A new theater request has been submitted. Here are the details:</p>
+        <ul>
+          <li><strong>Name:</strong> ${theaterName}</li>
+          <li><strong>Location:</strong> ${location}</li>
+          <li><strong>Seats:</strong> ${seats}</li>
+          <li><strong>Priority:</strong> ${priority}</li>
+          <li><strong>Facilities:</strong> ${facilities}</li>
+          <li><strong>User:</strong> ${user.fullName} (${user.email})</li>
+        </ul>
+        ${theaterLogoUrl ? `<p><strong>Logo:</strong><br><img src="${theaterLogoUrl}" width="150" style="margin-top:10px; border-radius:6px;"/></p>` : ""}
+        <hr style="margin:20px 0;">
+        <p style="font-size:14px; color:#666;">This is an automated email for SuperAdmin.</p>
+      </div>
+    </div>
+  `
+});
+
 
     return res.status(200).json({
       message: "Request and Theater created successfully & emails sent!",
@@ -182,7 +203,7 @@ export const sendRequest = async (req, res) => {
 // Get all theater requests
 export const getAllRequest = async (req, res) => {
   try {
-    const requests = await AdminRequest.find()
+    const requests = await AdminRequest.find().sort({ createdAt: -1 })
       .populate("user", "fullName email");
 
     if (!requests) {
@@ -207,14 +228,12 @@ export const getAllRequest = async (req, res) => {
   }
 };
 
-// Get request by ID
+
 export const getRequestById = async (req, res) => {
   try {
-    // sirf id nikaalo params se
+   
     const { id } = req.params;
-console.log("Params:", id);
 
-    // ab id ko pass karo
     const request = await AdminRequest.findById(id)
       .populate("user", "fullName email");
 
@@ -241,12 +260,12 @@ console.log("Params:", id);
 };
 
 
-// Update request (approve/reject)
+
 export const updateRequest = async (req, res) => {
   try {
     const { status, rejectionReason } = req.body;
     const requestId = req.params.id;
-
+    console.log(status, rejectionReason, requestId)
     if (!status || typeof status !== "string") {
       return res.status(400).json({
         message: "Invalid or missing status. Must be 'approved' or 'rejected'.",
@@ -263,9 +282,37 @@ export const updateRequest = async (req, res) => {
     }
 
     request.status = status.toLowerCase();
-    if (request.status === 'rejected') request.rejectionReason = rejectionReason || 'Not specified';
+    if (request.status === 'rejected'){
+      request.rejectionReason = rejectionReason || 'Not specified';
+      const user = await User.findById(request.user)
+      await transporter.sendMail({
+  from: process.env.EMAIL_USER,
+  to: user.email,
+  subject: "❌ Theater Request Rejected",
+  html: `
+    <div style="font-family: Arial, sans-serif; padding:20px; background:#f9f9f9; color:#333;">
+      <div style="max-width:600px; margin:auto; background:#fff; border-radius:10px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.1)">
+        <h2 style="color:#dc3545; text-align:center;">❌ Request Rejected</h2>
+        <p>Hi <strong>${user.fullName}</strong>,</p>
+        <p>We’re sorry 😔, but your theater request has been <strong style="color:red;">rejected</strong> after review.</p>
+        <p>Request details:</p>
+        <ul>
+          <li><strong>Theater:</strong> ${request.theaterName}</li>
+          <li><strong>Location:</strong> ${request.location}</li>
+          <li><strong>Seats:</strong> ${request.seats}</li>
+          <li><strong>Priority:</strong> ${request.priority}</li>
+          <li><strong>Priority:</strong> ${request.rejectionReason}</li>
+        </ul>
+        <p>If you believe this was a mistake, you can reapply with updated details.</p>
+        <hr style="margin:20px 0;">
+        <p style="font-size:14px; color:#666;">This is an automated email. Please do not reply.</p>
+      </div>
+    </div>
+  `
+});
+    } 
     request.reviewedAt = new Date();
-    request.approvedBy = req.adminId || null; // Assuming adminId from auth middleware
+    request.approvedBy = req.adminId || null; 
     await request.save();
 
     if (request.status === "approved") {
@@ -280,7 +327,7 @@ export const updateRequest = async (req, res) => {
   }
       const theater = new Theater({
         owner: request.user,
-    requestInfo: request._id,   // ✅ Link to AdminRequest
+    requestInfo: request._id, 
     name: request.theaterName,
     theaterEmail: request.theaterEmail,
     theaterPhone: request.theaterPhone,
@@ -298,8 +345,32 @@ export const updateRequest = async (req, res) => {
         { theater: theater._id, role: "admin" },
         { new: true }
       ).populate("theater");
+      const user = await User.findById(request.user)
 
-
+      await transporter.sendMail({
+  from: process.env.EMAIL_USER,
+  to: user.email,
+  subject: "🎉 Congratulations! Your Theater Request is Approved",
+  html: `
+    <div style="font-family: Arial, sans-serif; padding:20px; background:#f9f9f9; color:#333;">
+      <div style="max-width:600px; margin:auto; background:#fff; border-radius:10px; padding:20px; box-shadow:0 0 10px rgba(0,0,0,0.1)">
+        <h2 style="color:#28a745; text-align:center;">✅ Request Approved</h2>
+        <p>Hi <strong>${user.fullName}</strong>,</p>
+        <p>Great news! 🎊 Your theater request has been <strong style="color:green;">approved</strong>.</p>
+        <p>Here are the details:</p>
+        <ul>
+          <li><strong>Theater:</strong> ${request.theaterName}</li>
+          <li><strong>Location:</strong> ${request.location}</li>
+          <li><strong>Seats:</strong> ${request.seats}</li>
+          <li><strong>Priority:</strong> ${request.priority}</li>
+        </ul>
+        <p>You can now manage your theater in the system. 🚀</p>
+        <hr style="margin:20px 0;">
+        <p style="font-size:14px; color:#666;">This is an automated email. Please do not reply.</p>
+      </div>
+    </div>
+  `
+});
       return res.status(200).json({
         message: "Request approved & Theater created successfully!",
         success: true,

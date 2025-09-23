@@ -27,8 +27,8 @@ const DateSelect = ({dateTime, id}) => {
                         {/* <Button className='flex flex-col items-center justify-center h-14 w-14 aspect-square rounded cursor-pointer border border-primary/70'><span>11</span> <span>Nov</span></Button>
                         <Button className='flex flex-col items-center justify-center h-14 w-14 aspect-square rounded cursor-pointer border border-primary/70'><span>12</span> <span>Nov</span></Button>
                         <Button className='flex flex-col items-center justify-center h-14 w-14 aspect-square rounded cursor-pointer border border-primary/70'><span>13</span> <span>Nov</span></Button> */
-                          Object.keys(dateTime).map((date) => (
-                            <Button onClick={()=>setSelected(date)}  className={`flex flex-col items-center justify-center h-14 w-14 aspect-square rounded cursor-pointer border border-red-800 ${selected === date ? "bg-primary text-white" : "border border-primary/70"}`}>
+                          Object.keys(dateTime).map((date, idx) => (
+                            <Button key={idx} onClick={()=>setSelected(date)}  className={`flex flex-col items-center justify-center h-14 w-14 aspect-square rounded cursor-pointer border border-red-800 ${selected === date ? "bg-primary text-white" : "border border-primary/70"}`}>
                                 <span>{new Date(date).getDate()}</span>
                                 <span>{new Date(date).toLocaleDateString("en-US", {month:"short"})}</span>
                             </Button>

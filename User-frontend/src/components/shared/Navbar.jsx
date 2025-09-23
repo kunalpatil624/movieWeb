@@ -66,7 +66,10 @@ const Navbar = () => {
           <p onClick={() => navigate("/")} className="cursor-pointer">Home</p>
           <p onClick={() => navigate("/movies")} className="cursor-pointer">Movie</p>
           <p onClick={() => navigate("/theaters")} className="cursor-pointer">Theaters</p>
-          <p onClick={() => navigate("/")} className="cursor-pointer">Releases</p>
+          {
+            user?.role === "admin" ? (<p onClick={() => navigate("/admin")} className="cursor-pointer text-[#F84565]">Deshbord</p>) : (<p onClick={() => navigate("/")} className="cursor-pointer">Releases</p>)
+            
+          }
         </div>
 
         {/* Right Section */}
@@ -118,7 +121,10 @@ const Navbar = () => {
           <p onClick={() => navigate("/")} className="cursor-pointer">Home</p>
           <p onClick={() => navigate("/movies")} className="cursor-pointer">Movie</p>
           <p onClick={() => navigate("/theaters")} className="cursor-pointer">Theaters</p>
-          <p onClick={() => navigate("/")} className="cursor-pointer">Releases</p>
+          {
+            user?.role === "admin" ? (<p onClick={() => navigate("/admin")} className="cursor-pointer text-[#F84565]">Deshbord</p>) : (<p onClick={() => navigate("/")} className="cursor-pointer">Releases</p>)
+            
+          }
         </div>
       </div>
 

@@ -14,7 +14,6 @@ const useGetAllTheaters = ()=> {
                 if(res){
                     dispatch(setTheaters(res.data.theaters));
                 }
-                console.log(res.data)
             } catch (error) {
                 console.error("Error fetching movies:", error);
             }
