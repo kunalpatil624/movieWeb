@@ -61,9 +61,11 @@ const AdminLayout  = () => {
               </a>
               <a href="/admin/admin-requests" className="hover:text-red-500 text-center sm:text-left">
                 <VscGitPullRequestGoToChanges className='inline mr-1 '/> <span className='hidden sm:inline'>Admin Requests</span>
-                
+
               </a>
-              {/* <a href="/admin/add-show" className="hover:text-red-500 text-center sm:text-left">
+            
+              {/*   deleted thi componet becouse this not useFull
+               <a href="/admin/add-show" className="hover:text-red-500 text-center sm:text-left">
                <CgAddR className='inline mr-1 w-4 h-4 '/> <span className='hidden sm:inline'>Add Show</span>
               </a> */}
 

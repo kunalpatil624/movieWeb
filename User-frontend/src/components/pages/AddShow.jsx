@@ -7,11 +7,12 @@ import { useSelector } from 'react-redux'
 import { toast } from 'sonner'
 import { SHOW_API_AND_POINT } from '../comonent/utills/constand.js'
 import axios from "axios";
+import {Loader2} from 'lucide-react'
 
 export const AddShow = () => {
   const movies = useSelector((state) => state.movie.movies)
   const theater = useSelector((state) => state.auth.user.theater)
-
+  const [loading, setLoading] = useState(false);
   const [selectedMovie, setSelectedMovie] = useState(null)
 
   // Local state for form inputs
@@ -55,6 +56,7 @@ const handleSubmit = async () => {
   }
 
   try {
+    setLoading(true);
     for (let show of shows) {
       const payload = {
         movieId: show.movie._id,
@@ -79,6 +81,8 @@ const handleSubmit = async () => {
   } catch (error) {
     console.log(error);
     toast.error(error?.response?.data?.message || "Something went wrong");
+  }finally{
+    setLoading(false)
   }
 };
 
@@ -166,9 +170,14 @@ const handleSubmit = async () => {
       )}
 
       {/* Final Add Button */}
-      <Button onClick={handleSubmit} className='text-white hover:bg-[#f84566bf] bg-[#F84565] hover:cursor-pointer mt-6 px-8 py-5 mb-10'>
+      {
+        loading ? (
+              <Button className="w-[80%] my-4" ><Loader2 className=" mr-2 h-4 w-4 animate-spin"/> please wait</Button>
+            ) : <Button onClick={handleSubmit} className='text-white hover:bg-[#f84566bf] bg-[#F84565] hover:cursor-pointer mt-6 px-8 py-5 mb-10'>
         Add Show
       </Button>
+      }
+      
     </div>
   )
 }

@@ -26,7 +26,9 @@ function App() {
             <Route path="admin-requests" element={<AdminRequests />} />
             <Route path="admin-requests/:id" element={<RequestDetail />} />
             <Route path="dashboard" element={<AdminDashboard />} />
-            <Route path="add-show" element={<AddShow />} />
+            {/* changase in Admin layout and unlink this page */}
+            {/* <Route path="add-show" element={<AddShow />} />
+             */}
             <Route path="list-shows" element={<ListShows />} />
             <Route path="list-bookings" element={<ListBookings />} />
           </Route>
