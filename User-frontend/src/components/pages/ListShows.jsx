@@ -11,11 +11,19 @@ import {
 import { dummyDashboardData } from '../data/dummyDashboardData'
 import { useSelector } from 'react-redux'
 import UseGetSingleTheater from '../hooks/UseGetSingleTheater'
+import useGetAllMyBookings from '../hooks/useGetAllMyBookings'
+import useGetAllBookings from '../hooks/useGetAllBookings'
 
 const ListShows = () => {
+  useGetAllMyBookings() 
   const theater = useSelector((state) => state.auth.user.theater);
   const shows = useSelector((state)=> state.theater.singleTheater.shows);
-  UseGetSingleTheater(theater._id);
+  const bookings = useSelector((state) => state.booking.allBookings);
+  
+  const bookingHandle = ()=> {
+
+  }
+  useGetAllBookings();
   return (
     <div className="overflow-x-auto">
       <h1 className="font-medium text-2xl mb-4">
@@ -46,7 +54,11 @@ const ListShows = () => {
                 hour12:true
               })} {show.time}
               </TableCell>
-              <TableCell>{show.bookingSeates} Soon</TableCell>
+              <TableCell>{bookings.map((booking, idx) => {
+                if(show.movie.title === booking.show.movie.title){
+                 return booking.amount
+                }
+              })}</TableCell>
               <TableCell className="text-right">{show.totalRevenue} Soon</TableCell>
             </TableRow>
           ))}

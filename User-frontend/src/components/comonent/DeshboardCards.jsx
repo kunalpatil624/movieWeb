@@ -18,7 +18,7 @@ const DashboardCards = ({ movieData }) => {
           className="w-full sm:w-[220px] rounded-lg overflow-hidden h-full pb-3 border border-red-800 hover:-translate-y-1 transition duration-300 shadow-sm"
         >
           <img
-            className="h-60 w-full object-cover"
+            className="h-60 w-full object-cover p-2 rounded-2xl"
             src={show.movie?.poster || "/fallback-movie.jpg"}
             alt={show.movie?.title || "Movie Poster"}
           />

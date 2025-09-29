@@ -2,6 +2,7 @@ import { createSlice } from "@reduxjs/toolkit";
 
 const initialState = {
     myBookings: [],
+    allBookings:[],
     searchBookingByText: "" // ✅ default value set kiya
 };
 
@@ -12,6 +13,9 @@ const bookingSlice = createSlice({
         setMyBookings: (state, action) => {
             state.myBookings = action.payload;
         },
+        setAllBookings: (state, action) => {
+            state.allBookings = action.payload;
+        },
         setSearchBookingByText: (state, action) => {
             state.searchBookingByText = action.payload;
         }
@@ -19,6 +23,6 @@ const bookingSlice = createSlice({
 });
 
 // ✅ correct actions export
-export const { setMyBookings, setSearchBookingByText } = bookingSlice.actions;
+export const { setMyBookings, setSearchBookingByText, setAllBookings } = bookingSlice.actions;
 
 export default bookingSlice.reducer;
