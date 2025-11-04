@@ -85,9 +85,9 @@ const Navbar = () => {
           ) : (
             <DropdownMenu>
               <DropdownMenuTrigger>
-                <Avatar>
+                <Avatar >
                   <AvatarImage src={user.imageUrl} />
-                  <AvatarFallback>CN</AvatarFallback>
+                  <AvatarFallback className='bg-black'>UR</AvatarFallback>
                 </Avatar>
               </DropdownMenuTrigger>
               <DropdownMenuContent className='bg-blend-saturation'>

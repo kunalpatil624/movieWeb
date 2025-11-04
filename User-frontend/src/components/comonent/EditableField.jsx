@@ -5,9 +5,18 @@ import { Input } from "@/components/ui/input";
 const EditableField = ({lable, value, helperText, placeholder} ) => {
     const [open, setOpen] = useState(false);
     const [input, setInput] = useState({input:value || ""})
+    const [loading, setLoading] = useState(false);
     const onChangeHandle = (e)=> {
         setInput({...input, [e.target.name] : e.target.value})
     }
+    const handleUpdate = async()=> {
+    try {
+      setLoading(true);
+      
+    } catch (error) {
+      
+    }
+  }
   return (
     <div>
         <div onClick={()=> setOpen(true)} className="bg-black w-auto m-5 p-3">

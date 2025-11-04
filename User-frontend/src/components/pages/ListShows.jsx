@@ -19,10 +19,7 @@ const ListShows = () => {
   const theater = useSelector((state) => state.auth.user.theater);
   const shows = useSelector((state)=> state.theater.singleTheater.shows);
   const bookings = useSelector((state) => state.booking.allBookings);
-  
-  const bookingHandle = ()=> {
-
-  }
+  const bookingHandle = ()=> {}
   useGetAllBookings();
   return (
     <div className="overflow-x-auto">

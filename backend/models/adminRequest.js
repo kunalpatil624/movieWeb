@@ -22,3 +22,6 @@ const adminRequestSchema = new mongoose.Schema({
 });
 
 export default mongoose.model("AdminRequest", adminRequestSchema);
+
+
+

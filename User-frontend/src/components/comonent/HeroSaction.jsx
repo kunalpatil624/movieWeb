@@ -47,7 +47,7 @@ export default function LatestMoviesSection() {
           />
 
           {/* Details Right */}
-          <div className="flex-1 text-white flex flex-col gap-3">
+          <div className="flex-1 text-white flex flex-col gap-3 ">
             <h1 className="text-3xl md:text-5xl font-bold leading-tight">
               {movie.title}
             </h1>

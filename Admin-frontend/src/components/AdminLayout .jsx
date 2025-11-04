@@ -9,6 +9,7 @@ import { useDispatch } from 'react-redux';
 import { logout } from './redux/authSlice';
 import {toast} from 'sonner'
 import { Button } from "@/components/ui/button"
+import { CiLogin } from "react-icons/ci";
 import { VscGitPullRequestGoToChanges } from "react-icons/vsc";
 const AdminLayout  = () => {
   const navigate = useNavigate()
@@ -42,7 +43,7 @@ const AdminLayout  = () => {
             />
           </div>
           <div>
-            <Button onClick={()=>handleLogout()} className='cursor-pointer'>Log-Out</Button>
+            <Button onClick={()=>handleLogout()} className='cursor-pointer'><CiLogin />Log-Out</Button>
           </div>
         </div>
         <div className="flex">

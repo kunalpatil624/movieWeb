@@ -8,12 +8,11 @@ import { movieData } from '../data/movieDataWithValidImages'
 import { useNavigate } from 'react-router-dom';
 import { useSelector } from 'react-redux'
 import useGetAllMovies from '../hooks/UseGetAllMovies'
-
 const TrendingShow = () => {
     const navigate = useNavigate();
     const { loading } = useGetAllMovies();
   const movies = useSelector((state) => state.movie.movies);
-  if (loading) return <p>Loading...</p>;
+  if (loading) return <p className='text-center'>Loading..</p>;
   return (
     <div className='px-6 md:px-16 lg:px-24 xl:px-44 overflow-hidden'>
         <div className='pt-20 flex justify-between items-center'>

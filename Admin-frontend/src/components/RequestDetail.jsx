@@ -139,7 +139,7 @@ const RequestDetail = () => {
                 </p>
                 <div className="flex gap-2">
                   <Button
-                    variant="outline"
+                    className='bg-blue-950'
                     size="sm"
                     onClick={() => window.open(doc, "_blank")}
                   >
