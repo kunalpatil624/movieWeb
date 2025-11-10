@@ -23,8 +23,8 @@ const Footer = () => {
             <p className='mb-5'>Company</p>
             <ul>
               <li className='mb-1'><a href="">Home</a></li>
-              <li className='mb-1'><a href="">About us</a></li>
-              <li className='mb-1'><a href="">Contact us</a></li>
+              <li className='mb-1'><a href="about">About us</a></li>
+              <li className='mb-1'><a href="contact">Contact us</a></li>
               <li className='mb-1'><a href="">Privacy policy</a></li>
             </ul>
           </div>

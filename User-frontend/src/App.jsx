@@ -21,6 +21,8 @@ import TermsAndConditions from "./components/pages/TermsAndConditions.jsx";
 import Theaters from "./components/pages/Theaters.jsx";
 import TheaterDetail from "./components/pages/TheaterDetail.jsx";
 import PrivateRoute from "./components/comonent/PrivateRoute.jsx";
+import AboutUs from "./components/comonent/AboutUs.jsx";
+import ContactUs from "./components/ContactUs.jsx";
 function App() {
   const location = useLocation();
   const pathname = location.pathname;
@@ -46,7 +48,8 @@ function App() {
         <Route path="/terms" element={<TermsAndConditions />} />
         <Route path="/theaters" element={<Theaters />} />
         <Route path="/theaters/theater/:id" element={<TheaterDetail />} />
-
+        <Route path="about" element={<AboutUs />} />
+        <Route path="contact" element={<ContactUs />} />
         {/* Admin Routes (Nested) */}
         <Route path="/admin" element={<AdminLayout />}>
           <Route index element={<AdminDashboard />} />

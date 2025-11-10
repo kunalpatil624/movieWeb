@@ -4,9 +4,10 @@ import { TfiLayoutGrid2, TfiLayoutListThumb } from "react-icons/tfi";
 import { CgAddR, CgIfDesign } from "react-icons/cg";
 import { useSelector } from "react-redux";
 import UseGetSingleTheater from "../hooks/UseGetSingleTheater";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 
 const AdminLayout = () => {
-  const user = useSelector((state)=>state.auth.user)
+  const user = useSelector((state) => state.auth.user);
   UseGetSingleTheater(user.theater._id);
   return (
     <div>
@@ -26,31 +27,42 @@ const AdminLayout = () => {
         {/* Sidebar */}
         <div className="h-[calc(100vh-64px)] md:flex flex-col text-center items-center pt-8 max-w-13 md:max-w-60 w-full border-r border-gray-300/20 text-sm">
           <nav className="flex flex-col gap-4">
-            <div>
-              <img
-                className="h-9 md:h-14 w-9 md:w-14 rounded-full mx-auto"
-                src={user.imageUrl}
-                alt="admin"
-              />
+            <div> 
+              <Avatar className="h-9 md:h-14 w-9 md:w-14 rounded-full mx-auto">
+                <AvatarImage src={user.imageUrl} />
+                <AvatarFallback className="bg-amber-50 text-black">UR</AvatarFallback>
+              </Avatar>
               <p className="font-bold text-center hidden sm:inline">
                 {user.fullName}
               </p>
             </div>
 
             <div className="flex flex-col gap-4">
-              <Link to="/admin" className="hover:text-red-500 text-center sm:text-left">
+              <Link
+                to="/admin"
+                className="hover:text-red-500 text-center sm:text-left"
+              >
                 <TfiLayoutGrid2 className="inline mr-1" />
                 <span className="hidden sm:inline">Dashboard</span>
               </Link>
-              <Link to="/admin/add-show" className="hover:text-red-500 text-center sm:text-left">
+              <Link
+                to="/admin/add-show"
+                className="hover:text-red-500 text-center sm:text-left"
+              >
                 <CgAddR className="inline mr-1 w-4 h-4" />
                 <span className="hidden sm:inline">Add Show</span>
               </Link>
-              <Link to="/admin/list-shows" className="hover:text-red-500 text-center sm:text-left">
+              <Link
+                to="/admin/list-shows"
+                className="hover:text-red-500 text-center sm:text-left"
+              >
                 <TfiLayoutListThumb className="inline mr-1" />
                 <span className="hidden sm:inline">List Shows</span>
               </Link>
-              <Link to="/admin/list-bookings" className="hover:text-red-500 text-center sm:text-left">
+              <Link
+                to="/admin/list-bookings"
+                className="hover:text-red-500 text-center sm:text-left"
+              >
                 <CgIfDesign className="inline mr-1" />
                 <span className="hidden sm:inline">List Bookings</span>
               </Link>
